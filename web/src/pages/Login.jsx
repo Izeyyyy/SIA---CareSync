@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Login() {
 
@@ -9,21 +10,43 @@ export default function Login() {
         email: "",
         password: ""
     });
+    const [error, setError] = useState("");
 
     const handleChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         });
+        if (error) setError("");
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
-        // TEMP (we connect backend later)
-        console.log(form);
+        try {
+            const response = await api.post("/auth/login", {
+                email: form.email,
+                password: form.password
+            });
 
-        navigate("/admin"); // temporary redirect
+            if (response.data) {
+                const role = response.data.role?.toLowerCase();
+
+                if (role === "doctor") {
+                    navigate("/doctor");
+                } else if (role === "admin") {
+                    navigate("/admin");
+                } else {
+                    navigate("/staff");
+                }
+            } else {
+                setError("Invalid email or password.");
+            }
+        } catch (err) {
+            console.error("Login failed:", err);
+            setError("Login failed. Please check your credentials and try again.");
+        }
     };
 
     return (
@@ -50,6 +73,7 @@ export default function Login() {
 
                     <input
                         name="email"
+                        type="email"
                         placeholder="Email"
                         onChange={handleChange}
                         required
@@ -62,6 +86,12 @@ export default function Login() {
                         onChange={handleChange}
                         required
                     />
+
+                    {error && (
+                        <p style={{ color: "#dc3545", marginBottom: "0.75rem" }}>
+                            {error}
+                        </p>
+                    )}
 
                     <button className="auth-btn" type="submit">
                         Login

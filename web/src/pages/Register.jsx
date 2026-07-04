@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Register() {
 
@@ -13,18 +14,38 @@ export default function Register() {
         password: "",
         role: "staff"
     });
+    const [error, setError] = useState("");
 
     const handleChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         });
+        if (error) setError("");
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
-        navigate("/login");
+        setError("");
+
+        try {
+            const response = await api.post("/auth/register", {
+                firstName: form.firstName,
+                middleInitial: form.middleInitial ? form.middleInitial[0] : "N",
+                lastName: form.lastName,
+                email: form.email,
+                password: form.password,
+                role: form.role
+            });
+
+            if (response.status === 201 || response.status === 200) {
+                navigate("/login");
+            }
+        } catch (err) {
+            console.error("Registration failed:", err);
+            const message = err.response?.data?.message || "Registration failed. Please try again.";
+            setError(message);
+        }
     };
 
     return (
@@ -100,6 +121,12 @@ export default function Register() {
                             onChange={handleChange}
                             required
                         />
+
+                        {error && (
+                            <p style={{ color: "#dc3545", marginBottom: "0.75rem" }}>
+                                {error}
+                            </p>
+                        )}
 
                         <button className="auth-btn" type="submit">
                             Create Account
