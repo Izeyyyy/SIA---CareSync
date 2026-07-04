@@ -92,7 +92,7 @@ public class ProfileEntity {
         this.lastName = lastName;
     }
 
-    public void setMiddleName(char middleInitial){
+    public void setMiddleInitial(char middleInitial) {
         this.middleInitial = middleInitial;
     }
 
