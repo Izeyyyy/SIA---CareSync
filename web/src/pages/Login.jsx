@@ -1,16 +1,25 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 export default function Login() {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [form, setForm] = useState({
         email: "",
         password: ""
     });
     const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState(location.state?.successMessage || "");
+
+    useEffect(() => {
+        if (!successMessage) return;
+
+        const timer = setTimeout(() => setSuccessMessage(""), 4000);
+        return () => clearTimeout(timer);
+    }, [successMessage]);
 
     const handleChange = (e) => {
         setForm({
@@ -32,13 +41,18 @@ export default function Login() {
 
             if (response.data) {
                 const role = response.data.role?.toLowerCase();
+                localStorage.setItem("user", JSON.stringify(response.data));
+
+                const welcomeMessage = response.data.firstName
+                    ? `Welcome back, ${response.data.firstName}!`
+                    : "Welcome back!";
 
                 if (role === "doctor") {
-                    navigate("/doctor");
+                    navigate("/doctor", { state: { successMessage: welcomeMessage } });
                 } else if (role === "admin") {
-                    navigate("/admin");
+                    navigate("/admin", { state: { successMessage: welcomeMessage } });
                 } else {
-                    navigate("/staff");
+                    navigate("/staff", { state: { successMessage: welcomeMessage } });
                 }
             } else {
                 setError("Invalid email or password.");
@@ -90,6 +104,12 @@ export default function Login() {
                     {error && (
                         <p style={{ color: "#dc3545", marginBottom: "0.75rem" }}>
                             {error}
+                        </p>
+                    )}
+
+                    {successMessage && (
+                        <p style={{ color: "#198754", marginBottom: "0.75rem" }}>
+                            {successMessage}
                         </p>
                     )}
 

@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 export default function Register() {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [form, setForm] = useState({
         firstName: "",
@@ -15,6 +16,14 @@ export default function Register() {
         role: "staff"
     });
     const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState(location.state?.successMessage || "");
+
+    useEffect(() => {
+        if (!successMessage) return;
+
+        const timer = setTimeout(() => setSuccessMessage(""), 4000);
+        return () => clearTimeout(timer);
+    }, [successMessage]);
 
     const handleChange = (e) => {
         setForm({
@@ -39,7 +48,9 @@ export default function Register() {
             });
 
             if (response.status === 201 || response.status === 200) {
-                navigate("/login");
+                navigate("/login", {
+                    state: { successMessage: "Account created successfully. Please sign in." }
+                });
             }
         } catch (err) {
             console.error("Registration failed:", err);
@@ -128,6 +139,12 @@ export default function Register() {
                             </p>
                         )}
 
+                        {successMessage && (
+                            <p style={{ color: "#198754", marginBottom: "0.75rem" }}>
+                                {successMessage}
+                            </p>
+                        )}
+
                         <button className="auth-btn" type="submit">
                             Create Account
                         </button>
@@ -140,6 +157,7 @@ export default function Register() {
                 <div className="auth-footer-note">
                     Already have an account?{" "}
                     <button
+                        type = "button"
                         className="auth-inline-link"
                         onClick={() => navigate("/login")}
                     >
