@@ -1,1 +1,30 @@
-/node_modules/
+# ==========================
+# Node
+# ==========================
+node_modules/
+npm-debug.log*
+
+# ==========================
+# React / Vite
+# ==========================
+dist/
+.vite/
+
+# ==========================
+# Android Studio
+# ==========================
+.idea/
+.gradle/
+local.properties
+captures/
+
+# Build folders
+build/
+app/build/
+
+# Logs
+*.log
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
