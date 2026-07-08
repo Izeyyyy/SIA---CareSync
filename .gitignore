@@ -14,13 +14,24 @@ dist/
 # Android Studio
 # ==========================
 .idea/
+**/.idea/
+
 .gradle/
+**/.gradle/
+
 local.properties
+**/local.properties
+
 captures/
 
 # Build folders
 build/
-app/build/
+**/build/
+
+# Android artifacts
+*.apk
+*.aab
+*.iml
 
 # Logs
 *.log
