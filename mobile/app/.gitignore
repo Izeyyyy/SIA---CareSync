@@ -1,1 +1,22 @@
-/build
+# Gradle
+.gradle/
+
+# Local configuration
+local.properties
+
+# Android Studio
+.idea/
+
+# Build outputs
+/build/
+/app/build/
+
+# Captures
+captures/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
