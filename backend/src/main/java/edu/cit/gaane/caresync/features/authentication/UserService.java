@@ -1,4 +1,4 @@
-package edu.cit.gaane.caresync.services;
+package edu.cit.gaane.caresync.features.authentication;
 
 import java.util.Optional;
 
@@ -6,32 +6,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.cit.gaane.caresync.entities.ProfileEntity;
-import edu.cit.gaane.caresync.repositories.ProfileRepository;
-
 @Service
-public class ProfileService {
+public class UserService {
 
-    private final ProfileRepository profileRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ProfileService(ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
-        this.profileRepository = profileRepository;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder != null ? passwordEncoder : new BCryptPasswordEncoder();
     }
 
-    // REGISTER
-    public ProfileEntity register(ProfileEntity profile) {
-        profile.setPassword(passwordEncoder.encode(profile.getPassword()));
-        return profileRepository.save(profile);
+    public UserEntity register(UserEntity user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
-    // LOGIN
-    public Optional<ProfileEntity> login(String email, String password) {
-        Optional<ProfileEntity> user = profileRepository.findByEmail(email);
+    public Optional<UserEntity> login(String email, String password) {
+        Optional<UserEntity> user = userRepository.findByEmail(email);
 
         if (user.isPresent()) {
-            ProfileEntity storedUser = user.get();
+            UserEntity storedUser = user.get();
             String storedPassword = storedUser.getPassword();
 
             boolean matches = storedPassword != null && passwordEncoder.matches(password, storedPassword);
@@ -42,7 +37,7 @@ public class ProfileService {
 
             if (storedPassword != null && storedPassword.equals(password)) {
                 storedUser.setPassword(passwordEncoder.encode(password));
-                profileRepository.save(storedUser);
+                userRepository.save(storedUser);
                 return Optional.of(storedUser);
             }
         }

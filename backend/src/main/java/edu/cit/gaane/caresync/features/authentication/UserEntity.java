@@ -1,4 +1,4 @@
-package edu.cit.gaane.caresync.entities;
+package edu.cit.gaane.caresync.features.authentication;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "profiles")
-public class ProfileEntity {
+@Table(name = "users")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +33,11 @@ public class ProfileEntity {
     @Column(name = "middle_initial", nullable = false)
     private char middleInitial;
 
-    public ProfileEntity() {
+    public UserEntity() {
     }
 
-    public ProfileEntity(Long id, String firstName, String lastName,
-                         String email, String password, String role) {
+    public UserEntity(Long id, String firstName, String lastName,
+                      String email, String password, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,10 +45,6 @@ public class ProfileEntity {
         this.password = password;
         this.role = role;
     }
-
-    // Getters
-
-    
 
     public Long getId() {
         return id;
@@ -77,8 +73,6 @@ public class ProfileEntity {
     public String getRole() {
         return role;
     }
-
-    // Setters
 
     public void setId(Long id) {
         this.id = id;
