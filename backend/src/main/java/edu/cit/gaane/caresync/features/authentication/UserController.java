@@ -1,4 +1,4 @@
-package edu.cit.gaane.caresync.controllers;
+package edu.cit.gaane.caresync.features.authentication;
 
 import java.util.Map;
 
@@ -11,25 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.cit.gaane.caresync.entities.ProfileEntity;
-import edu.cit.gaane.caresync.services.ProfileService;
-
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:5173")
-public class ProfileController {
+public class UserController {
 
-    private final ProfileService profileService;
+    private final UserService userService;
 
-    public ProfileController(ProfileService profileService) {
-        this.profileService = profileService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody ProfileEntity profile) {
+    public ResponseEntity<?> register(@RequestBody UserEntity user) {
         try {
-            ProfileEntity savedProfile = profileService.register(profile);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedProfile);
+            UserEntity savedUser = userService.register(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "An account with this email already exists."));
@@ -40,8 +37,8 @@ public class ProfileController {
     }
 
     @PostMapping("/login")
-    public ProfileEntity login(@RequestBody ProfileEntity request) {
-        return profileService.login(request.getEmail(), request.getPassword())
+    public UserEntity login(@RequestBody UserEntity request) {
+        return userService.login(request.getEmail(), request.getPassword())
                 .orElse(null);
     }
 }

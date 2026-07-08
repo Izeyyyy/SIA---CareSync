@@ -15,30 +15,31 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import edu.cit.gaane.caresync.entities.ProfileEntity;
-import edu.cit.gaane.caresync.repositories.ProfileRepository;
+import edu.cit.gaane.caresync.features.authentication.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.UserRepository;
+import edu.cit.gaane.caresync.features.authentication.UserService;
 
 @ExtendWith(MockitoExtension.class)
-class ProfileServiceTest {
+class UserServiceTest {
 
     @Mock
-    private ProfileRepository profileRepository;
+    private UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @InjectMocks
-    private ProfileService profileService;
+    private UserService userService;
 
     @Test
     void registerHashesPasswordBeforeSaving() {
-        ProfileEntity profile = new ProfileEntity();
-        profile.setEmail("test@example.com");
-        profile.setPassword("plainPassword");
-        profile.setRole("staff");
+        UserEntity user = new UserEntity();
+        user.setEmail("test@example.com");
+        user.setPassword("plainPassword");
+        user.setRole("staff");
 
-        when(profileRepository.save(any(ProfileEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any(UserEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        ProfileEntity saved = profileService.register(profile);
+        UserEntity saved = userService.register(user);
 
         assertTrue(saved.getPassword().startsWith("$2a$"));
         assertTrue(passwordEncoder.matches("plainPassword", saved.getPassword()));
@@ -46,14 +47,14 @@ class ProfileServiceTest {
 
     @Test
     void loginAcceptsHashedPassword() {
-        ProfileEntity profile = new ProfileEntity();
-        profile.setEmail("test@example.com");
-        profile.setPassword(passwordEncoder.encode("plainPassword"));
-        profile.setRole("staff");
+        UserEntity user = new UserEntity();
+        user.setEmail("test@example.com");
+        user.setPassword(passwordEncoder.encode("plainPassword"));
+        user.setRole("staff");
 
-        when(profileRepository.findByEmail("test@example.com")).thenReturn(Optional.of(profile));
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
-        Optional<ProfileEntity> result = profileService.login("test@example.com", "plainPassword");
+        Optional<UserEntity> result = userService.login("test@example.com", "plainPassword");
 
         assertTrue(result.isPresent());
         assertEquals("test@example.com", result.get().getEmail());
