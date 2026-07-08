@@ -37,8 +37,23 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserEntity login(@RequestBody UserEntity request) {
-        return userService.login(request.getEmail(), request.getPassword())
-                .orElse(null);
-    }
+public ResponseEntity<?> login(@RequestBody UserEntity request) {
+
+    return userService.login(
+            request.getEmail(),
+            request.getPassword()
+    )
+    .map(user -> ResponseEntity.ok(
+            new LoginResponse(
+                    user.getId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getMiddleInitial(),
+                    user.getEmail(),
+                    user.getRole()
+            )
+    ))
+    .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+
+}
 }
