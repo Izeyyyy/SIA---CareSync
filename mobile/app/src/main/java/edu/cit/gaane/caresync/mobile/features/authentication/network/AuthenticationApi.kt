@@ -3,6 +3,7 @@ package edu.cit.gaane.caresync.mobile.features.authentication.network
 import edu.cit.gaane.caresync.mobile.features.authentication.model.LoginRequest
 import edu.cit.gaane.caresync.mobile.features.authentication.model.RegisterRequest
 import edu.cit.gaane.caresync.mobile.features.authentication.model.LoginResponse
+import edu.cit.gaane.caresync.mobile.features.authentication.model.User
 import retrofit2.http.Body
 import retrofit2.http.POST
 
