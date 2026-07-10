@@ -18,6 +18,15 @@ public class UserService {
     }
 
     public UserEntity register(UserEntity user) {
+        
+        if (user.getRole().equalsIgnoreCase("doctor")) {
+        user.setRole("Doctor");
+        } 
+        else if (user.getRole().equalsIgnoreCase("clinic staff")
+                || user.getRole().equalsIgnoreCase("staff")) {
+            user.setRole("Clinic Staff");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
