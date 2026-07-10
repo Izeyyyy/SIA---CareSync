@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.cit.gaane.caresync.mobile.features.authentication.screens.LoginScreen
 import edu.cit.gaane.caresync.mobile.features.authentication.screens.RegisterScreen
+import edu.cit.gaane.caresync.mobile.features.doctor.screens.DoctorDashboardScreen
+import edu.cit.gaane.caresync.mobile.features.staff.screens.StaffDashboardScreen
 
 @Composable
 fun AppNavigation() {
@@ -21,6 +23,22 @@ fun AppNavigation() {
             LoginScreen(
                     onRegisterClick = {
                         navController.navigate("register")
+                    },
+
+                    onLoginSuccess = { role ->
+
+                        when(role) {
+
+                            "Doctor" -> {
+                                navController.navigate("doctor_dashboard")
+                            }
+
+                            "Clinic Staff" -> {
+                                navController.navigate("staff_dashboard")
+                            }
+
+                        }
+
                     }
             )
         }
@@ -31,6 +49,23 @@ fun AppNavigation() {
                         navController.navigate("login")
                     }
             )
+        }
+
+        composable("doctor_dashboard") {
+
+            DoctorDashboardScreen(
+                    firstName = "Doctor"
+            )
+
+        }
+
+
+        composable("staff_dashboard") {
+
+            StaffDashboardScreen(
+                    firstName = "Staff"
+            )
+
         }
     }
 }
