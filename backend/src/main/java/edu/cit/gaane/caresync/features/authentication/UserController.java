@@ -56,7 +56,7 @@ public class UserController {
                     ));
     }
 
-        UserEntity loggedInUser = user.get();
+    UserEntity loggedInUser = user.get();
 
     LoginResponse response = new LoginResponse(
             loggedInUser.getId(),
