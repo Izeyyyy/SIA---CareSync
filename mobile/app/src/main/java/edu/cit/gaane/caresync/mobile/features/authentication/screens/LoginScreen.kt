@@ -34,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 @Composable
 fun LoginScreen(
         onRegisterClick: () -> Unit,
+        onLoginSuccess: (String) -> Unit,
         loginViewModel: LoginViewModel = viewModel()
 
 
@@ -53,6 +54,9 @@ fun LoginScreen(
 
     val loginResult =
             loginViewModel.loginResult.collectAsState()
+
+    val loggedInUser =
+            loginViewModel.loggedInUser.collectAsState()
 
 
     Column(
@@ -177,16 +181,14 @@ fun LoginScreen(
                     )
                 }
 
-                loginResult.value?.let {
+                LaunchedEffect(loggedInUser.value) {
 
-                    Text(
-                            text = it,
-                            color = MaterialTheme.colorScheme.primary
-                    )
+                    loggedInUser.value?.let { user ->
 
-                    Spacer(
-                            modifier = Modifier.height(10.dp)
-                    )
+                        onLoginSuccess(user.role)
+
+                    }
+
                 }
 
                 Button(
