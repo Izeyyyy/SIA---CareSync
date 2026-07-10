@@ -26,11 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
+import edu.cit.gaane.caresync.mobile.features.authentication.viewmodel.LoginViewModel
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun LoginScreen(
-        onRegisterClick: () -> Unit
-) {
+        onRegisterClick: () -> Unit,
+        loginViewModel: LoginViewModel = viewModel()
+
+
+){
 
     var email by remember {
         mutableStateOf("")
@@ -39,6 +46,13 @@ fun LoginScreen(
     var password by remember {
         mutableStateOf("")
     }
+
+    var message by remember {
+        mutableStateOf("")
+    }
+
+    val loginResult =
+            loginViewModel.loginResult.collectAsState()
 
 
     Column(
@@ -151,10 +165,38 @@ fun LoginScreen(
                         modifier = Modifier.height(20.dp)
                 )
 
+                if (message.isNotEmpty()) {
+
+                    Text(
+                            text = message,
+                            color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Spacer(
+                            modifier = Modifier.height(10.dp)
+                    )
+                }
+
+                loginResult.value?.let {
+
+                    Text(
+                            text = it,
+                            color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Spacer(
+                            modifier = Modifier.height(10.dp)
+                    )
+                }
 
                 Button(
                         onClick = {
-                            // API later
+
+                            loginViewModel.login(
+                                    email,
+                                    password
+                            )
+
                         },
 
                         modifier = Modifier.fillMaxWidth(),

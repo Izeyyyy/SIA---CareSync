@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 
 @Composable
@@ -229,7 +230,7 @@ fun RegisterScreen(
                         label = {
                             Text("Password")
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        visualTransformation = PasswordVisualTransformation()
                 )
 
 
