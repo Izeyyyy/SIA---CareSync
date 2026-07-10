@@ -30,11 +30,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.lifecycle.viewmodel.compose.viewModel
+import edu.cit.gaane.caresync.mobile.features.authentication.viewmodel.RegisterViewModel
+import androidx.compose.runtime.collectAsState
 
 
 @Composable
 fun RegisterScreen(
-        onLoginClick: () -> Unit
+        onLoginClick: () -> Unit,
+        viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     var firstName by remember {
@@ -53,9 +57,6 @@ fun RegisterScreen(
         mutableStateOf("")
     }
 
-    var username by remember {
-        mutableStateOf("")
-    }
 
     var password by remember {
         mutableStateOf("")
@@ -70,6 +71,7 @@ fun RegisterScreen(
         mutableStateOf(false)
     }
 
+    val registerResult by viewModel.registerResult.collectAsState()
 
     val scrollState = rememberScrollState()
 
@@ -205,21 +207,6 @@ fun RegisterScreen(
                 )
 
 
-                OutlinedTextField(
-                        value = username,
-                        onValueChange = {
-                            username = it
-                        },
-                        label = {
-                            Text("Username")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                )
-
-
-                Spacer(
-                        modifier = Modifier.height(10.dp)
-                )
 
 
                 OutlinedTextField(
@@ -294,10 +281,29 @@ fun RegisterScreen(
                         modifier = Modifier.height(20.dp)
                 )
 
+                registerResult?.let {
+
+                    Text(
+                            text = it,
+                            color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Spacer(
+                            modifier = Modifier.height(10.dp)
+                    )
+
+                }
 
                 Button(
                         onClick = {
-                            // Registration API later
+                            viewModel.register(
+                                    firstName = firstName,
+                                    lastName = lastName,
+                                    middleInitial = middleInitial,
+                                    email = email,
+                                    password = password,
+                                    role = selectedRole
+                            )
                         },
 
                         modifier = Modifier.fillMaxWidth(),
