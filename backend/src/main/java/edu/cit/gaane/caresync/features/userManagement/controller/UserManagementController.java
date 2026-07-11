@@ -4,9 +4,6 @@ import edu.cit.gaane.caresync.features.authentication.UserEntity;
 import edu.cit.gaane.caresync.features.userManagement.dto.UserResponse;
 import edu.cit.gaane.caresync.features.userManagement.service.UserManagementService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -44,6 +41,16 @@ public class UserManagementController {
     ){
 
         return service.updateUser(id, updatedUser);
+
+    }
+
+    @PutMapping("/{id}/status")
+    public UserEntity updateUserStatus(
+            @PathVariable Long id,
+            @RequestParam boolean active
+    ){
+
+        return service.updateUserStatus(id, active);
 
     }
 }

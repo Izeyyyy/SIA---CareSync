@@ -1,6 +1,6 @@
 import UserStatusBadge from "./UserStatusBadge";
 
-export default function UserTable({ users, onEdit }) {
+export default function UserTable({ users, onEdit, onStatusChange }) {
 
 
     return (
@@ -52,14 +52,15 @@ export default function UserTable({ users, onEdit }) {
                         <td>
 
                             <button onClick={() => {
-    console.log("Clicked:", user);
-    onEdit(user);
-}}>
+                                onEdit(user);
+                            }}>
                                 Edit
                             </button>
 
 
-                            <button>
+                            <button onClick={() => {
+                                onStatusChange(user.id, !user.active);
+                            }}>
                                 {
                                     user.active
                                     ? "Deactivate"

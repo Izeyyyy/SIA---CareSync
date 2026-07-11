@@ -52,6 +52,22 @@ public class UserManagementService {
 
 }
 
+    public UserEntity updateUserStatus(Long id, boolean active){
+
+        UserEntity user = userRepository
+                .findById(id)
+                .orElseThrow(() ->
+                    new RuntimeException("User not found")
+                );
+
+
+        user.setActive(active);
+
+
+        return userRepository.save(user);
+
+    }
+
     
 
     
