@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers, updateUser } from "./services/userManagementService";
+import { getUsers, updateUser, updateUserStatus } from "./services/userManagementService";
 import UserTable from "./components/UserTable";
 import EditUserModal from "./components/EditUserModal";
 
@@ -49,6 +49,27 @@ export default function UserManagement(){
             <UserTable 
                 users={users}
                 onEdit={setSelectedUser}
+                onStatusChange={async (id, active)=>{
+
+                    try{
+
+                        await updateUserStatus(
+                            id,
+                            active
+                        );
+
+                        await loadUsers();
+
+                    }catch(error){
+
+                        console.error(
+                            "Failed updating status:",
+                            error
+                        );
+
+                    }
+
+                }}
             />
 
 
