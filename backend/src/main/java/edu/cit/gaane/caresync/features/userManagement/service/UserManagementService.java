@@ -1,7 +1,8 @@
 package edu.cit.gaane.caresync.features.userManagement.service;
 
-import edu.cit.gaane.caresync.features.authentication.UserEntity;
-import edu.cit.gaane.caresync.features.authentication.UserRepository;
+import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

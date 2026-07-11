@@ -1,10 +1,13 @@
-package edu.cit.gaane.caresync.features.authentication;
+package edu.cit.gaane.caresync.features.authentication.service;
 
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.repository.UserRepository;
 
 @Service
 public class UserService {

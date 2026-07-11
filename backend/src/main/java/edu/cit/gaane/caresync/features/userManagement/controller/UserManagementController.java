@@ -1,6 +1,6 @@
 package edu.cit.gaane.caresync.features.userManagement.controller;
 
-import edu.cit.gaane.caresync.features.authentication.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 import edu.cit.gaane.caresync.features.userManagement.dto.UserResponse;
 import edu.cit.gaane.caresync.features.userManagement.service.UserManagementService;
 import org.springframework.web.bind.annotation.*;

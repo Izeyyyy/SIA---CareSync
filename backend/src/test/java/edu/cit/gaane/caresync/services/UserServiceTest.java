@@ -15,9 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import edu.cit.gaane.caresync.features.authentication.UserEntity;
-import edu.cit.gaane.caresync.features.authentication.UserRepository;
-import edu.cit.gaane.caresync.features.authentication.UserService;
+import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.repository.UserRepository;
+import edu.cit.gaane.caresync.features.authentication.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
