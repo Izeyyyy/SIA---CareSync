@@ -18,4 +18,42 @@ public class UserManagementService {
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public UserEntity updateUser(Long id, UserEntity updatedUser){
+
+    UserEntity existingUser = userRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new RuntimeException("User not found")
+            );
+
+
+    existingUser.setFirstName(
+            updatedUser.getFirstName()
+    );
+
+
+    existingUser.setLastName(
+            updatedUser.getLastName()
+    );
+
+
+    existingUser.setEmail(
+            updatedUser.getEmail()
+    );
+
+
+    existingUser.setRole(
+            updatedUser.getRole()
+    );
+
+
+    return userRepository.save(existingUser);
+
 }
+
+    
+
+    
+}
+
