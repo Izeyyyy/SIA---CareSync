@@ -10,8 +10,10 @@
 
 .dashboard-sidebar {
     width: 260px;
+    min-height: 100vh;
     background: var(--teal);
     color: white;
+    flex-shrink: 0;
 }
 
 .dashboard-main {
@@ -33,4 +35,280 @@
 .dashboard-content {
     flex: 1;
     padding: 32px;
+}
+
+/* ==========================================================
+   Dashboard Stats
+========================================================== */
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.page-header p {
+    margin-top: 6px;
+    color: var(--slate);
+    font-size: 14px;
+}
+
+.dashboard-card {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+}
+
+
+.stat-title {
+
+    color: var(--slate);
+
+    font-size: 13px;
+
+}
+
+
+.stat-value {
+
+    margin-top: 10px;
+
+    font-size: 28px;
+
+    color: var(--ink);
+
+}
+
+/* ==========================================================
+   User Table
+========================================================== */
+
+.user-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+
+.user-table th {
+
+    text-align: left;
+
+    font-size: 13px;
+
+    color: var(--slate);
+
+    padding: 12px;
+
+    border-bottom: 1px solid var(--border);
+
+}
+
+
+.user-table td {
+
+    padding: 14px 12px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 14px;
+
+}
+
+
+.user-table button {
+
+    border: none;
+
+    background: var(--teal);
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    margin-right: 8px;
+
+    font-size: 12px;
+
+}
+
+
+.user-table button:hover {
+
+    background: var(--teal-dark);
+
+}
+
+.status-badge {
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+.status-badge.active {
+
+    background: var(--teal-tint);
+
+    color: var(--teal-dark);
+
+}
+
+
+.status-badge.inactive {
+
+    background: var(--danger-tint);
+
+    color: var(--danger);
+
+}
+
+/* ==========================================================
+   Edit User Modal
+========================================================== */
+
+.modal-overlay {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(15, 23, 42, 0.45);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 9999;
+
+    backdrop-filter: blur(3px);
+
+}
+
+
+.modal-card {
+
+    width: 420px;
+
+    background: var(--card);
+
+    padding: 40px;
+
+    border-radius: 14px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+
+    animation: modalFade 0.2s ease;
+
+}
+
+
+.modal-card h2 {
+
+    margin-bottom: 24px;
+
+}
+
+
+.modal-card input,
+.modal-card select {
+
+    width: 100%;
+
+    padding: 10px 12px;
+
+    margin-bottom: 14px;
+
+    border-radius: 8px;
+
+    border: 1px solid var(--border);
+
+    background: white;
+
+    color: #1f2937;
+
+}
+
+
+.modal-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 10px;
+
+}
+
+
+.modal-actions button {
+
+    flex: 1;
+
+}
+
+
+
+@keyframes modalFade {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-10px);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+.modal-card input::placeholder {
+
+    color: #6b7280;
+
 }
