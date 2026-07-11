@@ -1,4 +1,4 @@
-package edu.cit.gaane.caresync.features.authentication;
+package edu.cit.gaane.caresync.features.authentication.controller;
 
 import java.util.Map;
 
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cit.gaane.caresync.features.authentication.dto.LoginResponse;
+import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
+import edu.cit.gaane.caresync.features.authentication.service.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
