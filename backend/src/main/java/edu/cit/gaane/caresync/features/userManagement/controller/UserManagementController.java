@@ -29,7 +29,7 @@ public class UserManagementController {
                         user.getLastName(),
                         user.getEmail(),
                         user.getRole(),
-                        user.isActive()
+                        user.getActive()
                 ))
                 .toList();
     }

@@ -27,6 +27,8 @@ public class UserService {
             user.setRole("Clinic Staff");
         }
 
+        user.setActive(true);
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

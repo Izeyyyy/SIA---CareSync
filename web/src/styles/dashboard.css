@@ -1,0 +1,36 @@
+/* ==========================================================
+   Dashboard Layout
+========================================================== */
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--paper);
+}
+
+.dashboard-sidebar {
+    width: 260px;
+    background: var(--teal);
+    color: white;
+}
+
+.dashboard-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-navbar {
+    height: 72px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 32px;
+}

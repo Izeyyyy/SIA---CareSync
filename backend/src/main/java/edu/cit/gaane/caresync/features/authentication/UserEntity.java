@@ -34,13 +34,13 @@ public class UserEntity {
     private char middleInitial;
 
     @Column(nullable = false)
-    private boolean active = true;
+    private Boolean active = true;
 
     public UserEntity() {
     }
 
     public UserEntity(Long id, String firstName, String lastName,
-                      String email, String password, String role, boolean active) {
+                      String email, String password, String role, Boolean active) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -106,11 +106,11 @@ public class UserEntity {
         this.role = role;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }
