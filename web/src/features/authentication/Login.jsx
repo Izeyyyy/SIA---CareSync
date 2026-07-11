@@ -50,7 +50,7 @@ export default function Login() {
                 if (role === "doctor") {
                     navigate("/doctor", { state: { successMessage: welcomeMessage } });
                 } else if (role === "admin") {
-                    navigate("/admin", { state: { successMessage: welcomeMessage } });
+                    navigate("/admin/dashboard", { state: { successMessage: welcomeMessage } });
                 } else {
                     navigate("/staff", { state: { successMessage: welcomeMessage } });
                 }
