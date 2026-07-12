@@ -2,6 +2,7 @@ package edu.cit.gaane.caresync.features.authentication.dto;
 
 public class LoginResponse {
 
+    private String token;
     private Long id;
     private String firstName;
     private String lastName;
@@ -12,6 +13,7 @@ public class LoginResponse {
     public LoginResponse() {}
 
     public LoginResponse(
+            String token,
             Long id,
             String firstName,
             String lastName,
@@ -19,12 +21,17 @@ public class LoginResponse {
             String email,
             String role
     ) {
+        this.token = token;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleInitial = middleInitial;
         this.email = email;
         this.role = role;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public Long getId() {

@@ -9,4 +9,6 @@ import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
+    long countByRoleIgnoreCase(String role);
+    long countByActiveFalse();
 }
