@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.cit.gaane.caresync.features.authentication.dto.LoginResponse;
 import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 import edu.cit.gaane.caresync.features.authentication.service.UserService;
+import edu.cit.gaane.caresync.config.JwtService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -21,9 +22,11 @@ import edu.cit.gaane.caresync.features.authentication.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
@@ -60,7 +63,13 @@ public class UserController {
 
     UserEntity loggedInUser = user.get();
 
+    String token = jwtService.generateToken(
+            loggedInUser.getEmail(),
+            loggedInUser.getRole()
+    );
+
     LoginResponse response = new LoginResponse(
+            token,
             loggedInUser.getId(),
             loggedInUser.getFirstName(),
             loggedInUser.getLastName(),

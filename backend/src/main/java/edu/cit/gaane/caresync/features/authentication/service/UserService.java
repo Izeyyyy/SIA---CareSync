@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import edu.cit.gaane.caresync.config.JwtService;
 import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 import edu.cit.gaane.caresync.features.authentication.repository.UserRepository;
 
@@ -14,10 +15,21 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        JwtService jwtService
+    ) {
+
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder != null ? passwordEncoder : new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder != null
+                ? passwordEncoder
+                : new BCryptPasswordEncoder();
+
+        this.jwtService = jwtService;
+
     }
 
     public UserEntity register(UserEntity user) {
