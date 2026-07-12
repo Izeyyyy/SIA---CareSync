@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import api from "../../services/api";
 
 export default function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const { login } = useAuth();
 
     const [form, setForm] = useState({
         email: "",
@@ -41,7 +43,7 @@ export default function Login() {
 
             if (response.data) {
                 const role = response.data.role?.toLowerCase();
-                localStorage.setItem("user", JSON.stringify(response.data));
+                login(response.data);
 
                 const welcomeMessage = response.data.firstName
                     ? `Welcome back, ${response.data.firstName}!`
