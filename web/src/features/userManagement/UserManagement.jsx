@@ -4,7 +4,7 @@ import UserTable from "./components/UserTable";
 import EditUserModal from "./components/EditUserModal";
 
 
-export default function UserManagement(){
+export default function UserManagement({ onUserUpdated }){
 
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -60,6 +60,10 @@ export default function UserManagement(){
 
                         await loadUsers();
 
+                        if (onUserUpdated) {
+                            onUserUpdated();
+                        }
+
                     }catch(error){
 
                         console.error(
@@ -88,6 +92,10 @@ export default function UserManagement(){
 
 
                         await loadUsers();
+
+                        if (onUserUpdated) {
+                            onUserUpdated();
+                        }
 
 
                         setSelectedUser(null);

@@ -1,4 +1,6 @@
 import "../../styles/dashboard.css";
+import { useEffect, useState } from "react";
+import { getDashboardStats } from "./services/DashboardService";
 
 import SideBar from "../../components/dashboard/Sidebar";
 import TopNavbar from "../../components/dashboard/TopNavbar";
@@ -10,8 +12,39 @@ import UserManagement from "../userManagement/UserManagement";
 
 export default function AdminDashboard(){
 
+    const [stats, setStats] = useState({
+
+    totalUsers: 0,
+    totalDoctors: 0,
+    totalStaff: 0,
+    inactiveUsers: 0
+
+});
+
+const loadStats = async () => {
+
+    try {
+
+        const response = await getDashboardStats();
+
+        setStats(response.data);
+
+    } catch (err) {
+
+        console.error("Failed loading dashboard stats:", err);
+
+    }
+
+};
+
+useEffect(() => {
+
+    loadStats();
+
+}, []);
+
     return (
-        <DashboardLayout>
+        <>
 
             <PageHeader
                 title="Admin Dashboard"
@@ -23,27 +56,27 @@ export default function AdminDashboard(){
 
                 <StatCard
                     title="Total Users"
-                    value="0"
+                    value={stats.totalUsers}
                 />
 
                 <StatCard
                     title="Doctors"
-                    value="0"
+                    value={stats.totalDoctors}
                 />
 
                 <StatCard
                     title="Clinic Staff"
-                    value="0"
+                    value={stats.totalStaff}
                 />
 
                 <StatCard
                     title="Inactive Accounts"
-                    value="0"
+                    value={stats.inactiveUsers}
                 />
 
             </div>
 
-            <UserManagement />
-        </DashboardLayout>
+            <UserManagement onUserUpdated={loadStats}/>
+        </>
     );
 }

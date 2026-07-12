@@ -51,7 +51,7 @@ export const sidebarMenus = {
                 {
                     label: "Clinic Staff",
                     path: "/admin/staff",
-                    icon: BriefcaseMedical
+                    icon: UserCog
                 }
 
             ]
