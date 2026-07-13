@@ -136,51 +136,45 @@ export const sidebarMenus = {
 
     staff: [
 
-        {
+    {
 
-            title: "MAIN",
+        title: "MAIN",
 
-            items: [
+        items: [
 
-                {
-                    label: "Dashboard",
-                    path: "/staff/dashboard",
-                    icon: LayoutDashboard
-                }
+            {
+                label: "Dashboard",
+                path: "/staff/dashboard",
+                icon: LayoutDashboard
+            }
 
-            ]
+        ]
 
-        },
+    },
 
-        {
+    {
 
-            title: "OPERATIONS",
+        title: "PATIENTS",
 
-            items: [
+        items: [
 
-                {
-                    label: "Patients",
-                    path: "/staff/patients",
-                    icon: Users
-                },
+            {
+                label: "Patient Registration",
+                path: "/staff/patients",
+                icon: Users
+            },
 
-                {
-                    label: "Consultations",
-                    path: "/staff/consultations",
-                    icon: CalendarDays
-                },
+            {
+                label: "Patient Records",
+                path: "/staff/records",
+                icon: FolderHeart
+            }
 
-                {
-                    label: "Queue",
-                    path: "/staff/queue",
-                    icon: Clock3
-                }
+        ]
 
-            ]
+    }
 
-        }
-
-    ]
+]
 
 };
 

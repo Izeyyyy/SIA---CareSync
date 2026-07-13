@@ -53,8 +53,16 @@ export default function Login() {
                     navigate("/doctor", { state: { successMessage: welcomeMessage } });
                 } else if (role === "admin") {
                     navigate("/admin/dashboard", { state: { successMessage: welcomeMessage } });
-                } else {
-                    navigate("/staff", { state: { successMessage: welcomeMessage } });
+                } else if (role === "clinic staff") {
+
+                    navigate(
+                        "/staff/dashboard",
+                        {
+                            state: {
+                                successMessage: welcomeMessage
+                            }
+                        }
+                    );      
                 }
             } else {
                 setError("Invalid email or password.");
