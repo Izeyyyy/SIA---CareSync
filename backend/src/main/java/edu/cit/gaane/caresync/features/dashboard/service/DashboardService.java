@@ -8,6 +8,7 @@ import edu.cit.gaane.caresync.features.dashboard.dto.DashboardStatsResponse;
 public class DashboardService {
     private final UserRepository userRepository;
 
+
     public DashboardService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
