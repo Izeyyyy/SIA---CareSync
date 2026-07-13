@@ -2,11 +2,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import AdminDashboard from "./features/dashboard/AdminDashboard";
+import ClinicStaffDashboard from "./features/dashboard/ClinicStaffDashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminLayout from "./layouts/AdminLayout";
 import UserManagementPage from "./features/userManagement/pages/UserManagementPage";
 import DoctorManagementPage from "./features/doctorManagement/pages/DoctorManagementPage";
 import ClinicStaffManagementPage from "./features/clinicStaffManagement/pages/ClinicStaffManagementPage";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import ClinicStaffLayout from "./layouts/ClinicStaffLayout";
 
 
 
@@ -49,6 +52,24 @@ function App() {
                     />
 
                 </Route>
+
+                <Route
+                    path="/staff"
+                    element={
+                        <ProtectedRoute role="clinic staff">
+                            <ClinicStaffLayout />
+                        </ProtectedRoute>
+                    }
+                >
+
+                    <Route
+                        path="dashboard"
+                        element={<ClinicStaffDashboard />}
+                    />
+
+                </Route>
+
+                
 
                             </Routes>
                         </BrowserRouter>
