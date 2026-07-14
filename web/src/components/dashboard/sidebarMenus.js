@@ -152,17 +152,26 @@ export const sidebarMenus = {
 
     },
 
+
     {
 
-        title: "PATIENTS",
+        title: "PATIENT MANAGEMENT",
 
         items: [
 
             {
-                label: "Patient Registration",
+                label: "Patients",
                 path: "/staff/patients",
                 icon: Users
             },
+
+
+            {
+                label: "Register Patient",
+                path: "/staff/patients/register",
+                icon: ClipboardList
+            },
+
 
             {
                 label: "Patient Records",
@@ -175,7 +184,6 @@ export const sidebarMenus = {
     }
 
 ]
-
 };
 
 

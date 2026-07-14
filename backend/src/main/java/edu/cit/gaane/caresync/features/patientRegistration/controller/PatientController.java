@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import edu.cit.gaane.caresync.features.patientRegistration.entity.PatientEntity;
+import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientRequest;
+import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientResponse;
 import edu.cit.gaane.caresync.features.patientRegistration.service.PatientService;
 
 @RestController
@@ -21,31 +22,31 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<PatientEntity> registerPatient(
-            @RequestBody PatientEntity patient) {
+    public ResponseEntity<PatientResponse> registerPatient(
+            @RequestBody PatientRequest patient) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(patientService.registerPatient(patient));
     }
 
     @GetMapping
-    public List<PatientEntity> getAllPatients() {
+    public List<PatientResponse> getAllPatients() {
         return patientService.getAllPatients();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPatientById(@PathVariable Long id) {
+    public ResponseEntity<PatientResponse> getPatientById(@PathVariable Long id) {
 
-        return patientService.getPatientById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(
+            patientService.getPatientById(id)
+    );
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientEntity> updatePatient(
+    public ResponseEntity<PatientResponse> updatePatient(
             @PathVariable Long id,
-            @RequestBody PatientEntity patient) {
+            @RequestBody PatientRequest patient) {
 
         return ResponseEntity.ok(
                 patientService.updatePatient(id, patient)

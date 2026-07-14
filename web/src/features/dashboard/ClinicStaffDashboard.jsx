@@ -2,6 +2,7 @@ import "../../styles/dashboard.css";
 
 import PageHeader from "../../components/dashboard/PageHeader";
 import StatCard from "../../components/dashboard/StatCard";
+import QuickActions from "./components/QuickActions";
 
 export default function ClinicStaffDashboard() {
 
@@ -37,6 +38,8 @@ export default function ClinicStaffDashboard() {
                 />
 
             </div>
+
+            <QuickActions />
 
         </>
 

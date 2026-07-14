@@ -11,7 +11,20 @@ export default function Sidebar() {
 
     const role = user?.role?.toLowerCase();
 
-    const menu = sidebarMenus[role] || [];
+    const roleMap = {
+
+        "Admin": "admin",
+
+        "Doctor": "doctor",
+
+        "Clinic Staff": "staff"
+
+    };
+
+
+    const menuRole = roleMap[user.role];
+
+    const menus = sidebarMenus[menuRole];
 
     return (
 
@@ -58,7 +71,7 @@ export default function Sidebar() {
 
             {/* Sections */}
 
-            {menu.map(section => (
+            {menus.map(section => (
 
                 <div
                     className="sidebar-section"

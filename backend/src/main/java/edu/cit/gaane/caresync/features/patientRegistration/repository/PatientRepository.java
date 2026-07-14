@@ -11,6 +11,7 @@ import edu.cit.gaane.caresync.features.patientRegistration.entity.PatientEntity;
 public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
 
     Optional<PatientEntity> findByPatientNumber(String patientNumber);
+    Optional<PatientEntity> findTopByOrderByIdDesc();
 
     List<PatientEntity> findByLastNameContainingIgnoreCase(String lastName);
 

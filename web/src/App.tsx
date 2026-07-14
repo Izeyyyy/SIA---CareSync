@@ -10,6 +10,9 @@ import DoctorManagementPage from "./features/doctorManagement/pages/DoctorManage
 import ClinicStaffManagementPage from "./features/clinicStaffManagement/pages/ClinicStaffManagementPage";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import ClinicStaffLayout from "./layouts/ClinicStaffLayout";
+import PatientListPage from "./features/patientManagement/pages/PatientListPage";
+import RegisterPatientPage from "./features/patientManagement/pages/RegisterPatientPage";
+import PatientRecordsPage from "./features/patientManagement/pages/PatientRecordsPage";
 
 
 
@@ -65,6 +68,21 @@ function App() {
                     <Route
                         path="dashboard"
                         element={<ClinicStaffDashboard />}
+                    />
+
+                    <Route
+                        path="patients"
+                        element={<PatientListPage />}
+                    />
+
+                    <Route
+                        path="patients/register"
+                        element={<RegisterPatientPage />}
+                    />
+
+                    <Route
+                        path="records"
+                        element={<PatientRecordsPage />}
                     />
 
                 </Route>
