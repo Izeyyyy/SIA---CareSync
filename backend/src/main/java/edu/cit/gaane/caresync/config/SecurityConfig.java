@@ -68,6 +68,14 @@ public class SecurityConfig {
                     )
                     .hasAuthority("Admin")
 
+                    .requestMatchers(
+                                "/api/patients/**"
+                        )
+                        .hasAnyAuthority(
+                                "Clinic Staff",
+                                "Doctor"
+                        )
+
 
                     .anyRequest()
                     .authenticated()

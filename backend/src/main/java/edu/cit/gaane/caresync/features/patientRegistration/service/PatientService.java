@@ -2,10 +2,12 @@ package edu.cit.gaane.caresync.features.patientRegistration.service;
 
 import java.time.Year;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientRequest;
+import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientResponse;
 import edu.cit.gaane.caresync.features.patientRegistration.entity.PatientEntity;
 import edu.cit.gaane.caresync.features.patientRegistration.repository.PatientRepository;
 
@@ -18,52 +20,140 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    public PatientEntity registerPatient(PatientEntity patient) {
+    /*
+     * REGISTER PATIENT
+     */
 
-        // Save first to generate the database ID
-        PatientEntity savedPatient = patientRepository.save(patient);
+    public PatientResponse registerPatient(PatientRequest request) {
 
-        String patientNumber = String.format(
-                "CS-%d-%06d",
-                Year.now().getValue(),
-                savedPatient.getId()
-        );
+        PatientEntity patient = new PatientEntity();
 
-        savedPatient.setPatientNumber(patientNumber);
+        patient.setFirstName(request.getFirstName());
+        patient.setMiddleInitial(request.getMiddleInitial());
+        patient.setLastName(request.getLastName());
+        patient.setBirthDate(request.getBirthDate());
+        patient.setGender(request.getGender());
+        patient.setContactNumber(request.getContactNumber());
+        patient.setAddress(request.getAddress());
 
-        return patientRepository.save(savedPatient);
+
+        String patientNumber = generatePatientNumber();
+
+            patient.setPatientNumber(patientNumber);
+
+            PatientEntity savedPatient = patientRepository.save(patient);
+
+            return mapToResponse(savedPatient);
     }
 
-    public List<PatientEntity> getAllPatients() {
-        return patientRepository.findAll();
+    /*
+     * GET ALL PATIENTS
+     */
+
+    public List<PatientResponse> getAllPatients() {
+
+        return patientRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
     }
 
-    public Optional<PatientEntity> getPatientById(Long id) {
-        return patientRepository.findById(id);
-    }
+    /*
+     * GET ONE PATIENT
+     */
 
-    public Optional<PatientEntity> getPatientByPatientNumber(String patientNumber) {
-        return patientRepository.findByPatientNumber(patientNumber);
-    }
-
-    public PatientEntity updatePatient(Long id, PatientEntity updatedPatient) {
+    public PatientResponse getPatientById(Long id) {
 
         PatientEntity patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found."));
 
-        patient.setFirstName(updatedPatient.getFirstName());
-        patient.setMiddleInitial(updatedPatient.getMiddleInitial());
-        patient.setLastName(updatedPatient.getLastName());
-        patient.setBirthDate(updatedPatient.getBirthDate());
-        patient.setGender(updatedPatient.getGender());
-        patient.setContactNumber(updatedPatient.getContactNumber());
-        patient.setAddress(updatedPatient.getAddress());
+        return mapToResponse(patient);
 
-        return patientRepository.save(patient);
     }
+
+    /*
+     * UPDATE PATIENT
+     */
+
+    public PatientResponse updatePatient(Long id, PatientRequest request) {
+
+        PatientEntity patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found."));
+
+        patient.setFirstName(request.getFirstName());
+        patient.setMiddleInitial(request.getMiddleInitial());
+        patient.setLastName(request.getLastName());
+        patient.setBirthDate(request.getBirthDate());
+        patient.setGender(request.getGender());
+        patient.setContactNumber(request.getContactNumber());
+        patient.setAddress(request.getAddress());
+
+        patientRepository.save(patient);
+
+        return mapToResponse(patient);
+
+    }
+
+    /*
+     * DELETE PATIENT
+     */
 
     public void deletePatient(Long id) {
+
         patientRepository.deleteById(id);
+
     }
+
+    /*
+     * ENTITY -> RESPONSE DTO
+     */
+
+    private PatientResponse mapToResponse(PatientEntity patient) {
+
+        return new PatientResponse(
+                patient.getId(),
+                patient.getPatientNumber(),
+                patient.getFirstName(),
+                patient.getMiddleInitial(),
+                patient.getLastName(),
+                patient.getBirthDate(),
+                patient.getGender(),
+                patient.getContactNumber(),
+                patient.getAddress(),
+                patient.getDateRegistered()
+        );
+
+    }
+
+    private String generatePatientNumber() {
+
+    int year = Year.now().getValue();
+
+    var latestPatient = patientRepository.findTopByOrderByIdDesc();
+
+    int nextNumber = 1;
+
+    if (latestPatient.isPresent()) {
+
+        String latest = latestPatient.get().getPatientNumber();
+
+        if (latest != null && !latest.isBlank()) {
+
+            String[] parts = latest.split("-");
+
+            nextNumber = Integer.parseInt(parts[2]) + 1;
+
+        }
+
+    }
+
+    return String.format(
+            "CS-%d-%06d",
+            year,
+            nextNumber
+    );
+
+}
 
 }

@@ -31,13 +31,13 @@ export default function SidebarItem({
         <NavLink
 
             to={path}
-
+            end
             onClick={handleClick}
 
             className={({ isActive }) =>
                 isActive
                     ? "sidebar-item active"
-                    : "sidebar-item"
+                    : "sidebar-item"   
             }
 
         >
