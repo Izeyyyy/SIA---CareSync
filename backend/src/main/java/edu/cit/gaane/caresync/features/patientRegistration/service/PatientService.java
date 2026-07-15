@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import edu.cit.gaane.caresync.audit.service.AuditLogService;
 import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientRequest;
 import edu.cit.gaane.caresync.features.patientRegistration.dto.PatientResponse;
 import edu.cit.gaane.caresync.features.patientRegistration.entity.PatientEntity;
@@ -15,9 +16,11 @@ import edu.cit.gaane.caresync.features.patientRegistration.repository.PatientRep
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final AuditLogService auditLogService;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, AuditLogService auditLogService) {
         this.patientRepository = patientRepository;
+        this.auditLogService = auditLogService;
     }
 
     /*
@@ -42,6 +45,21 @@ public class PatientService {
             patient.setPatientNumber(patientNumber);
 
             PatientEntity savedPatient = patientRepository.save(patient);
+
+            auditLogService.createLog(
+
+                "CREATE",
+
+                "PATIENT",
+
+                "Registered patient "
+                + savedPatient.getFirstName()
+                + " "
+                + savedPatient.getLastName(),
+
+                savedPatient.getId()
+
+        );
 
             return mapToResponse(savedPatient);
     }
@@ -91,6 +109,21 @@ public class PatientService {
 
         patientRepository.save(patient);
 
+        auditLogService.createLog(
+
+            "UPDATE",
+
+            "PATIENT",
+
+            "Updated patient "
+            + patient.getFirstName()
+            + " "
+            + patient.getLastName(),
+
+            patient.getId()
+
+    );
+
         return mapToResponse(patient);
 
     }
@@ -101,7 +134,28 @@ public class PatientService {
 
     public void deletePatient(Long id) {
 
-        patientRepository.deleteById(id);
+        PatientEntity patient =
+        patientRepository.findById(id)
+        .orElseThrow();
+
+
+    auditLogService.createLog(
+
+        "DELETE",
+
+        "PATIENT",
+
+        "Deleted patient "
+        + patient.getFirstName()
+        + " "
+        + patient.getLastName(),
+
+        patient.getId()
+
+);  
+
+
+    patientRepository.delete(patient);
 
     }
 

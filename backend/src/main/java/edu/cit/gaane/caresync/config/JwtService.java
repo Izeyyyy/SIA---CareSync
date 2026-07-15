@@ -1,34 +1,45 @@
 package edu.cit.gaane.caresync.config;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
-import org.springframework.stereotype.Service;
-
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+
 
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY =
-            "caresync-super-secret-key-for-jwt-authentication-2026";
 
-    private final long EXPIRATION_TIME =
-            1000 * 60 * 60 * 24; // 24 hours
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
 
 
-    private Key getSigningKey(){
+    @Value("${jwt.expiration}")
+    private long EXPIRATION_TIME;
 
-        return Keys.hmacShaKeyFor(
-                SECRET_KEY.getBytes()
-        );
 
+
+    private Key getSigningKey() {       
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
 
-    public String generateToken(String email, String role){
+
+    public String generateToken(
+            String email,
+            String role
+
+    ){
+
+        
+        System.out.println(SECRET_KEY);
+        System.out.println(SECRET_KEY.length());
 
         return Jwts.builder()
 
@@ -54,6 +65,7 @@ public class JwtService {
     }
 
 
+
     public String extractEmail(String token){
 
         return Jwts.parser()
@@ -71,6 +83,7 @@ public class JwtService {
                 .getSubject();
 
     }
+
 
 
     public String extractRole(String token){
@@ -91,5 +104,10 @@ public class JwtService {
 
     }
 
+    @PostConstruct
+        public void checkSecret() {
+        System.out.println("JWT SECRET = " + SECRET_KEY);
+        System.out.println("JWT LENGTH = " + SECRET_KEY.length());
+}
 
 }

@@ -1,24 +1,20 @@
 package edu.cit.gaane.caresync.config;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 import edu.cit.gaane.caresync.features.authentication.repository.UserRepository;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import org.springframework.stereotype.Component;
-
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
-import java.util.List;
 
 
 @Component
@@ -65,49 +61,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
 
-        String token =
-                authHeader.substring(7);
+        String token = authHeader.substring(7);
 
+        try {
 
+        String email = jwtService.extractEmail(token);
 
-        String email =
-                jwtService.extractEmail(token);
+        UserEntity user = userRepository
+                .findByEmail(email)
+                .orElse(null);
 
+        if (user != null) {
 
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                user,
+                                null,
+                                List.of(
+                                        new SimpleGrantedAuthority(user.getRole())
+                                )
+                        );
 
-        UserEntity user =
-                userRepository.findByEmail(email)
-                        .orElse(null);
-
-
-
-        if(user != null){
-
-            UsernamePasswordAuthenticationToken authentication =
-
-                    new UsernamePasswordAuthenticationToken(
-
-                            user,
-
-                            null,
-
-                            List.of(
-                                    new SimpleGrantedAuthority(
-                                            user.getRole()
-                                    )
-                            )
-
-                    );
-
-
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(authentication);
-
+                SecurityContextHolder
+                        .getContext()
+                        .setAuthentication(authentication);
         }
 
+        }
+        catch (Exception ex) {
 
+        // Invalid or expired token.
+        // Don't authenticate the request.
+        SecurityContextHolder.clearContext();
 
+        }
         filterChain.doFilter(
                 request,
                 response

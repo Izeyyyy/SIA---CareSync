@@ -8,33 +8,24 @@ const api = axios.create({
 });
 
 
-api.interceptors.request.use(
+api.interceptors.request.use((config) => {
 
-    (config) => {
-
-        const token =
-            localStorage.getItem("token");
-
-
-        if(token){
-
-            config.headers.Authorization =
-                `Bearer ${token}`;
-
-        }
-
-
+    // Don't attach JWT when logging in or registering
+    if (
+        config.url === "/auth/login" ||
+        config.url === "/auth/register"
+    ) {
         return config;
-
-    },
-
-    (error) => {
-
-        return Promise.reject(error);
-
     }
 
-);
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+});
 
 
 export default api;
