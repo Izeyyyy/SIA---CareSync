@@ -13,6 +13,8 @@ import ClinicStaffLayout from "./layouts/ClinicStaffLayout";
 import PatientListPage from "./features/patientManagement/pages/PatientListPage";
 import RegisterPatientPage from "./features/patientManagement/pages/RegisterPatientPage";
 import PatientRecordsPage from "./features/patientManagement/pages/PatientRecordsPage";
+import EditPatientPage from "./features/patientManagement/pages/EditPatientPage";
+import AuditLogsPage from "./features/auditLogs/pages/AuditLogsPage";
 
 
 
@@ -54,6 +56,11 @@ function App() {
                         element={<ClinicStaffManagementPage />}
                     />
 
+                    <Route
+                        path="/admin/audit"
+                        element={<AuditLogsPage />}
+                    />
+
                 </Route>
 
                 <Route
@@ -81,8 +88,23 @@ function App() {
                     />
 
                     <Route
-                        path="records"
+                        path="patients"
+                        element={<PatientListPage />}
+                    />
+
+                    <Route
+                        path="patients/register"
+                        element={<RegisterPatientPage />}
+                    />
+
+                    <Route
+                        path="patients/:id"
                         element={<PatientRecordsPage />}
+                    />
+
+                    <Route
+                        path="patients/:id/edit"
+                        element={<EditPatientPage />}
                     />
 
                 </Route>

@@ -163,7 +163,7 @@ export default function PatientTable({ patients }) {
 
                         <button
 
-                            className="table-action-btn"
+                            className="patient-action-btn"
 
                             onClick={() =>
                                 navigate(
@@ -181,7 +181,7 @@ export default function PatientTable({ patients }) {
 
                         <button
 
-                            className="table-action-btn secondary"
+                            className="patient-action-btn"
 
                             onClick={() =>
                                 navigate(

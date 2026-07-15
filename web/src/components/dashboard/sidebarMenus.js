@@ -4,9 +4,9 @@ import {
     UserCog,
     ClipboardList,
     Settings,
+    FolderHeart,
     LogOut,
     Stethoscope,
-    FolderHeart,
     CalendarDays,
     Clock3
 } from "lucide-react";
@@ -171,13 +171,6 @@ export const sidebarMenus = {
                 path: "/staff/patients/register",
                 icon: ClipboardList
             },
-
-
-            {
-                label: "Patient Records",
-                path: "/staff/records",
-                icon: FolderHeart
-            }
 
         ]
 

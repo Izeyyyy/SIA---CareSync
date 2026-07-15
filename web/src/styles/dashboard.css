@@ -1083,3 +1083,40 @@
     line-height:1.7;
 
 }
+
+/* ==========================================================
+   Patient Table Actions
+========================================================== */
+
+.patient-action-btn {
+
+    border: none;
+
+    background: var(--teal);
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-right: 8px;
+
+    transition: .2s ease;
+
+}
+
+
+.patient-action-btn:hover {
+
+    background: var(--teal-dark);
+
+    transform: translateY(-1px);
+
+}

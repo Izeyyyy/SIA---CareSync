@@ -5,19 +5,19 @@ import FormField from "../../../components/common/FormField";
 import PrimaryButton from "../../../components/common/PrimaryButton";
 import SecondaryButton from "../../../components/common/SecondaryButton";
 
-export default function PatientForm({ onSubmit }) {
+export default function PatientForm({ onSubmit, initialData = {} }) {
 
     const [form, setForm] = useState({
 
-        firstName: "",
-        middleInitial: "",
-        lastName: "",
+    firstName: initialData.firstName || "",
+    middleInitial: initialData.middleInitial || "",
+    lastName: initialData.lastName || "",
 
-        birthDate: "",
-        gender: "",
+    birthDate: initialData.birthDate || "",
+    gender: initialData.gender || "",
 
-        contactNumber: "",
-        address: ""
+    contactNumber: initialData.contactNumber || "",
+    address: initialData.address || ""
 
     });
 
