@@ -6,9 +6,7 @@ import DashboardCard from "../../../components/dashboard/DashboardCard";
 import PrimaryButton from "../../../components/common/PrimaryButton";
 import SecondaryButton from "../../../components/common/SecondaryButton";
 
-import {
-    getPatient
-} from "../services/patientService";
+import patientService from "../services/patientService";
 
 
 export default function PatientRecordsPage() {
@@ -23,7 +21,7 @@ export default function PatientRecordsPage() {
 
         try {
 
-            const response = await getPatient(id);
+            const response = await patientService.getPatient(id);
 
             setPatient(response.data);
 

@@ -6,10 +6,7 @@ import DashboardCard from "../../../components/dashboard/DashboardCard";
 
 import PatientForm from "../components/PatientForm";
 
-import {
-    getPatient,
-    updatePatient
-} from "../services/patientService";
+import patientService from "../services/patientService";
 
 
 export default function EditPatientPage() {
@@ -25,12 +22,11 @@ export default function EditPatientPage() {
 
     const loadPatient = async () => {
 
-        try {
+    try {
 
-            const response = await getPatient(id);
+        const patient = await patientService.getPatient(id);
 
-            setPatient(response.data);
-
+        setPatient(patient);
 
         } catch (error) {
 
@@ -55,27 +51,25 @@ export default function EditPatientPage() {
 
     const handleSubmit = async (updatedPatient) => {
 
-        try {
+    try {
 
-            await updatePatient(
-                id,
-                updatedPatient
-            );
+        await patientService.updatePatient(
+            id,
+            updatedPatient
+        );
 
+        navigate("/staff/patients");
 
-            navigate("/staff/patients");
+            } catch (error) {
 
+                console.error(
+                    "Failed updating patient:",
+                    error
+                );
 
-        } catch (error) {
+            }
 
-            console.error(
-                "Failed updating patient:",
-                error
-            );
-
-        }
-
-    };
+        };
 
 
 

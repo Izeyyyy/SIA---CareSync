@@ -81,7 +81,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                         new SimpleGrantedAuthority(user.getRole())
                                 )
                         );
+                
+                        System.out.println(
+    "AUTH USER: " + user.getEmail()
+);
 
+System.out.println(
+    "AUTH ROLE: " + user.getRole()
+);
                 SecurityContextHolder
                         .getContext()
                         .setAuthentication(authentication);
