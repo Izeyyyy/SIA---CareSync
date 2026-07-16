@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/common/DataTable";
 
 
-export default function PatientTable({ patients }) {
+export default function PatientTable({ patients, doctorMode = false }) {
 
     const navigate = useNavigate();
 
@@ -160,41 +160,67 @@ export default function PatientTable({ patients }) {
 
                     <td>
 
+                        {
+                            doctorMode ? (
 
-                        <button
+                                <button
 
-                            className="patient-action-btn"
+                                    className="patient-action-btn"
 
-                            onClick={() =>
-                                navigate(
-                                    `/staff/patients/${patient.id}`
-                                )
-                            }
+                                    onClick={() =>
+                                        navigate(
+                                            `/doctor/consultations/patients/${patient.id}`
+                                        )
+                                    }
 
-                        >
+                                >
 
-                            View
+                                    Open Record
 
-                        </button>
+                                </button>
+
+                            ) : (
+
+                                <>
+
+                                    <button
+
+                                        className="patient-action-btn"
+
+                                        onClick={() =>
+                                            navigate(
+                                                `/staff/patients/${patient.id}`
+                                            )
+                                        }
+
+                                    >
+
+                                        View
+
+                                    </button>
 
 
+                                    <button
 
-                        <button
+                                        className="patient-action-btn"
 
-                            className="patient-action-btn"
+                                        onClick={() =>
+                                            navigate(
+                                                `/staff/patients/${patient.id}/edit`
+                                            )
+                                        }
 
-                            onClick={() =>
-                                navigate(
-                                    `/staff/patients/${patient.id}/edit`
-                                )
-                            }
+                                    >
 
-                        >
+                                        Edit
 
-                            Edit
+                                    </button>
 
-                        </button>
+                                </>
 
+                            )
+
+                        }
 
                     </td>
 

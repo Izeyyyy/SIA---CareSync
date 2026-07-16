@@ -112,19 +112,8 @@ export const sidebarMenus = {
                     label: "My Patients",
                     path: "/doctor/patients",
                     icon: Users
-                },
-
-                {
-                    label: "Medical Records",
-                    path: "/doctor/records",
-                    icon: FolderHeart
-                },
-
-                {
-                    label: "Consultations",
-                    path: "/doctor/consultations",
-                    icon: Stethoscope
                 }
+
 
             ]
 

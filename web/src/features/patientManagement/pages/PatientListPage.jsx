@@ -7,7 +7,7 @@ import ActionBar from "../../../components/common/ActionBar";
 import EmptyState from "../../../components/common/EmptyState";
 
 import PatientTable from "../components/PatientTable";
-import { getPatients } from "../services/patientService";
+import patientService from "../services/patientService";
 
 export default function PatientListPage() {
 
@@ -20,11 +20,11 @@ export default function PatientListPage() {
 
         try {
 
-            const response = await getPatients();
-            console.log("FULL RESPONSE:", response);
-        console.log("DATA:", response.data);
-        console.log("ARRAY?:", Array.isArray(response.data));
-            setPatients(response.data);
+            const patients = await patientService.getPatients();
+            console.log("FULL RESPONSE:", patients);
+            console.log("DATA:", patients);
+            console.log("ARRAY?:", Array.isArray(patients));
+            setPatients(patients);
 
         } catch (error) {
 

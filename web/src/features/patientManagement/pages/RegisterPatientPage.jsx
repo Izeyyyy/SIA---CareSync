@@ -5,7 +5,7 @@ import DashboardCard from "../../../components/dashboard/DashboardCard";
 
 import PatientForm from "../components/PatientForm";
 
-import { registerPatient } from "../services/patientService";
+import patientService from "../services/patientService";
 
 export default function RegisterPatientPage() {
 
@@ -15,7 +15,7 @@ export default function RegisterPatientPage() {
 
         try {
 
-            await registerPatient(patient);
+            await patientService.registerPatient(patient);
 
             navigate("/staff/patients");
 

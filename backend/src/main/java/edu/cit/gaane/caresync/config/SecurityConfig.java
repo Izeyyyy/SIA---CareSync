@@ -48,30 +48,38 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-                    .requestMatchers(
-                            "/api/auth/**"
-                    )
-                    .permitAll()
+                .requestMatchers(
+                        "/api/auth/**"
+                )
+                .permitAll()
 
 
-                    .requestMatchers(
-                            "/api/dashboard/**"
-                    )
-                    .hasAuthority("Admin")
+                .requestMatchers(
+                        "/api/dashboard/**"
+                )
+                .hasAuthority("Admin")
 
 
-                    .requestMatchers(
-                            "/api/users/**"
-                    )
-                    .hasAuthority("Admin")
+                .requestMatchers(
+                        "/api/users/**"
+                )
+                .hasAuthority("Admin")
 
-                    .requestMatchers(
-                                "/api/patients/**"
-                        )
-                        .hasAnyAuthority(
-                                "Clinic Staff",
-                                "Doctor"
-                        )
+                .requestMatchers(
+                        "/api/patients/**"
+                )
+                .hasAnyAuthority(
+                        "Clinic Staff",
+                        "Doctor"
+                )
+
+                .requestMatchers(
+                        "/api/consultations/**"
+                )
+                .hasAuthority(
+                        "Doctor"
+                )
+                
 
 
                     .anyRequest()
