@@ -37,9 +37,6 @@ public class JwtService {
 
     ){
 
-        
-        System.out.println(SECRET_KEY);
-        System.out.println(SECRET_KEY.length());
 
         return Jwts.builder()
 
