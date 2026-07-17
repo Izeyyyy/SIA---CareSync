@@ -25,7 +25,7 @@ public class CorsConfig {
         configuration.setAllowedOrigins(
                 List.of(
                         "http://localhost:5173",
-                        "https://caresync-sia.onrender.com/"
+                        "https://caresync-sia.onrender.com"
                 )
         );
 

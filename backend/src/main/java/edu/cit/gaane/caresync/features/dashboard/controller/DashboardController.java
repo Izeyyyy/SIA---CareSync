@@ -1,12 +1,14 @@
 package edu.cit.gaane.caresync.features.dashboard.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import edu.cit.gaane.caresync.features.dashboard.dto.DashboardStatsResponse;
 import edu.cit.gaane.caresync.features.dashboard.service.DashboardService;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:5173")
 public class DashboardController {
 
     private final DashboardService dashboardService;

@@ -4,7 +4,14 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import edu.cit.gaane.caresync.features.consultation.dto.ConsultationRequest;
 import edu.cit.gaane.caresync.features.consultation.dto.ConsultationResponse;
@@ -12,7 +19,6 @@ import edu.cit.gaane.caresync.features.consultation.service.ConsultationService;
 
 @RestController
 @RequestMapping("/api/consultations")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ConsultationController {
 
     private final ConsultationService consultationService;
