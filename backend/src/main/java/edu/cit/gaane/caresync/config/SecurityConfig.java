@@ -38,9 +38,6 @@ public class SecurityConfig {
             HttpSecurity http
     ) throws Exception {
 
-        System.out.println("MY SECURITY CONFIG IS LOADED");
-
-
         http
 
             .csrf(csrf -> csrf.disable())
