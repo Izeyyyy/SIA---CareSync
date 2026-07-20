@@ -7,11 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import edu.cit.gaane.caresync.mobile.features.authentication.screens.LoginScreen
 import edu.cit.gaane.caresync.mobile.features.authentication.screens.RegisterScreen
 import edu.cit.gaane.caresync.mobile.features.doctor.screens.DoctorDashboardScreen
-import edu.cit.gaane.caresync.mobile.features.staff.screens.StaffDashboardScreen
+import edu.cit.gaane.caresync.mobile.features.staff.screens.StaffScreen
+import edu.cit.gaane.caresync.mobile.features.admin.screens.AdminScreen
 
 @Composable
 fun AppNavigation() {
-
     val navController = rememberNavController()
 
     NavHost(
@@ -28,6 +28,9 @@ fun AppNavigation() {
                     onLoginSuccess = { role ->
 
                         when(role) {
+                            "Admin" -> {
+                                navController.navigate("admin_dashboard")
+                            }
 
                             "Doctor" -> {
                                 navController.navigate("doctor_dashboard")
@@ -62,8 +65,16 @@ fun AppNavigation() {
 
         composable("staff_dashboard") {
 
-            StaffDashboardScreen(
+            StaffScreen(
                     firstName = "Staff"
+            )
+
+        }
+
+        composable("admin_dashboard") {
+
+            AdminScreen(
+                firstName = "Admin"
             )
 
         }

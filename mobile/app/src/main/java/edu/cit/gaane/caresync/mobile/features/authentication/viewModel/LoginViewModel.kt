@@ -3,25 +3,38 @@ package edu.cit.gaane.caresync.mobile.features.authentication.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.cit.gaane.caresync.mobile.features.authentication.repository.AuthenticationRepository
+import edu.cit.gaane.caresync.mobile.features.authentication.models.LoginResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import edu.cit.gaane.caresync.mobile.features.authentication.model.LoginResponse
+import retrofit2.HttpException
+import java.io.IOException
+
 
 class LoginViewModel : ViewModel() {
 
+
     private val repository =
-            AuthenticationRepository()
+        AuthenticationRepository()
+
 
 
     private val _loggedInUser =
-            MutableStateFlow<LoginResponse?>(null)
+        MutableStateFlow<LoginResponse?>(null)
+
 
     private val _loginResult =
-            MutableStateFlow<String?>(null)
+        MutableStateFlow<String?>(null)
+
+
+    private val _isLoading =
+        MutableStateFlow(false)
+
+
 
     val loggedInUser: StateFlow<LoginResponse?>
         get() = _loggedInUser
+
 
 
     val loginResult: StateFlow<String?>
@@ -29,30 +42,110 @@ class LoginViewModel : ViewModel() {
 
 
 
+    val isLoading: StateFlow<Boolean>
+        get() = _isLoading
+
+
+
+
     fun login(
-            email: String,
-            password: String
+        email: String,
+        password: String
     ) {
+
 
         viewModelScope.launch {
 
+
+            _isLoading.value = true
+
+
             try {
 
+
                 val user =
-                        repository.login(email, password)
+                    repository.login(
+                        email,
+                        password
+                    )
+
 
                 _loggedInUser.value = user
 
-                _loginResult.value =
-                        "Login successful"
-
-
-            } catch (e: Exception) {
 
                 _loginResult.value =
-                        "Server connection failed"
+                    "Login successful"
+
+
 
             }
+
+
+            catch (e: HttpException) {
+
+
+                when(e.code()) {
+
+
+                    401 -> {
+
+                        _loginResult.value =
+                            "Invalid email or password"
+
+                    }
+
+
+                    409 -> {
+
+                        _loginResult.value =
+                            "Account already exists"
+
+                    }
+
+
+                    else -> {
+
+                        _loginResult.value =
+                            "Something went wrong"
+
+                    }
+
+                }
+
+
+            }
+
+
+            catch(e: IOException) {
+
+
+                _loginResult.value =
+                    "Cannot connect to server"
+
+
+            }
+
+
+            catch(e: Exception) {
+
+
+                _loginResult.value =
+                    e.message ?: "Login failed"
+
+
+            }
+
+
+            finally {
+
+
+                _isLoading.value = false
+
+
+            }
+
         }
+
     }
+
 }

@@ -1,4 +1,4 @@
-package edu.cit.gaane.caresync.mobile.features.authentication.model
+package edu.cit.gaane.caresync.mobile.features.authentication.models
 
 data class User(
         val userId: Long?,

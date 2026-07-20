@@ -2,7 +2,7 @@ package edu.cit.gaane.caresync.mobile.features.authentication.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import edu.cit.gaane.caresync.mobile.features.authentication.model.RegisterRequest
+import edu.cit.gaane.caresync.mobile.features.authentication.models.RegisterRequest
 import edu.cit.gaane.caresync.mobile.features.authentication.repository.AuthenticationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
