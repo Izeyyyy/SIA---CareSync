@@ -36,6 +36,9 @@ public class UserEntity {
     @Column(nullable = false)
     private Boolean active = true;
 
+    @Column(name = "must_change_password", nullable = false)
+    private Boolean mustChangePassword = false;
+
     public UserEntity() {
     }
 
@@ -112,5 +115,13 @@ public class UserEntity {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getMustChangePassword() {
+        return mustChangePassword;
+    }
+
+    public void setMustChangePassword(Boolean mustChangePassword) {
+        this.mustChangePassword = mustChangePassword;
     }
 }

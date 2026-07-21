@@ -441,4 +441,125 @@ body {
 .auth-card select {
     margin-bottom: 0;
 }
+
+.toast {
+
+    position: fixed;
+
+    top: 20px;
+
+    right: 20px;
+
+    padding: 14px 20px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 14px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+    z-index: 9999;
+
+    animation: slideIn 0.3s ease;
+
+}
+
+
+.toast.success {
+
+    background: #198754;
+
+}
+
+
+.toast.error {
+
+    background: #dc3545;
+
+}
+
+
+@keyframes slideIn {
+
+    from {
+
+        transform: translateX(100%);
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+        opacity: 1;
+
+    }
+
+}
+
+.toast {
+
+    position: fixed;
+
+    top: 24px;
+
+    right: 24px;
+
+    min-width: 280px;
+
+    max-width: 400px;
+
+    padding: 14px 18px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+
+    z-index: 99999;
+
+    animation: toastSlide .25s ease;
+
+}
+
+.toast.success{
+
+    background:#198754;
+
+}
+
+.toast.error{
+
+    background:#dc3545;
+
+}
+
+@keyframes toastSlide{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
  

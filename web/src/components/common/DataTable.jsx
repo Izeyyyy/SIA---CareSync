@@ -9,35 +9,39 @@ export default function DataTable({
 
     return (
 
-        <table className="dashboard-table">
+        <div className="table-container">
 
-            <thead>
+            <table className="dashboard-table">
 
-                <tr>
+                <thead>
+
+                    <tr>
+
+                        {
+
+                            columns.map(column => (
+
+                                <th key={column}>
+
+                                    {column}
+
+                                </th>
+
+                            ))
+
+                        }
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
 
                     {
 
-                        columns.map(column => (
+                        data.length === 0
 
-                            <th key={column}>
-
-                                {column}
-
-                            </th>
-
-                        ))
-
-                    }
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {
-
-                    data.length === 0 ?
+                        ?
 
                         (
 
@@ -45,9 +49,7 @@ export default function DataTable({
 
                                 <td
                                     colSpan={columns.length}
-                                    style={{
-                                        textAlign: "center"
-                                    }}
+                                    className="table-empty"
                                 >
 
                                     {emptyMessage}
@@ -62,11 +64,13 @@ export default function DataTable({
 
                         data.map(renderRow)
 
-                }
+                    }
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
 
     );
 

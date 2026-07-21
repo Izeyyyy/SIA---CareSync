@@ -41,7 +41,7 @@ export default function NewConsultationPage() {
 
             });
 
-            navigate(`/doctor/patients/${patientId}`);
+            navigate(`/doctor/consultations/patients/${patientId}`);
 
         }
         catch (error) {

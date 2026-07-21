@@ -1,8 +1,12 @@
 import api from "../../../services/api";
 
 
-export const getUsers = () => {
-    return api.get("/users");
+export const getUsers = (search = "") => {
+    return api.get("/users", {
+        params: {
+            search
+        }
+    });
 };
 
 export const updateUser = (id, user) => {
@@ -23,4 +27,8 @@ export const updateUserStatus = (id, active) => {
         }
     );
 
+};
+
+export const resetPassword = (id) => {
+    return api.put(`/users/${id}/reset-password`);
 };

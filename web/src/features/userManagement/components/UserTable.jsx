@@ -1,6 +1,6 @@
 import UserStatusBadge from "./UserStatusBadge";
 
-export default function UserTable({ users, onEdit, onStatusChange }) {
+export default function UserTable({ users, onEdit, onStatusChange, onResetPassword }) {
 
 
     return (
@@ -66,6 +66,11 @@ export default function UserTable({ users, onEdit, onStatusChange }) {
                                     ? "Deactivate"
                                     : "Activate"
                                 }
+                            </button>
+                            <button
+                                onClick={() => onResetPassword(user)}
+                            >
+                                Reset Password
                             </button>
 
                         </td>

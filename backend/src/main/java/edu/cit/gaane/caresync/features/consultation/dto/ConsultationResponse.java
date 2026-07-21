@@ -13,10 +13,8 @@ public class ConsultationResponse {
 
     private Long patientId;
     private String patientName;
-
     private Long doctorId;
     private String doctorName;
-
     private String chiefComplaint;
     private String diagnosis;
     private String treatmentPlan;
@@ -40,19 +38,15 @@ public class ConsultationResponse {
     ) {
 
         this.id = id;
-
         this.patientId = patientId;
         this.patientName = patientName;
-
         this.doctorId = doctorId;
         this.doctorName = doctorName;
-
         this.chiefComplaint = chiefComplaint;
         this.diagnosis = diagnosis;
         this.treatmentPlan = treatmentPlan;
         this.prescription = prescription;
         this.notes = notes;
-
         this.consultationDate = consultationDate;
     }
 

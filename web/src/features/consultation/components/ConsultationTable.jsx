@@ -1,4 +1,5 @@
 import DataTable from "../../../components/common/DataTable";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function ConsultationTable({
 
@@ -6,9 +7,12 @@ export default function ConsultationTable({
     onView,
     onEdit,
     onDelete
-}) {
+})
+{
+    const { user } = useAuth();
 
-    return (
+
+return (
         <DataTable
             columns={[
 
@@ -46,38 +50,36 @@ export default function ConsultationTable({
                     </td>
 
                     <td>
+
                         <button
                             className="patient-action-btn"
-                            onClick={() =>
-                                onView(consultation)
-                            }
+                            onClick={() => onView(consultation)}
                         >
                             View
                         </button>
 
-                        <button
-                            className="patient-action-btn"
-                            onClick={() =>
-                                onEdit(consultation)
-                            }
-                        >
-                            Edit
-                        </button>
-
-                        {
-                            onDelete &&
+                        {consultation.doctorId === user.id && (
 
                             <button
-
                                 className="patient-action-btn"
+                                onClick={() => onEdit(consultation)}
+                            >
+                                Edit
+                            </button>
 
-                                onClick={() =>
-                                    onDelete(consultation)
-                                }
+                        )}
+
+                        {consultation.doctorId === user.id && onDelete && (
+
+                            <button
+                                className="patient-action-btn"
+                                onClick={() => onDelete(consultation)}
                             >
                                 Delete
                             </button>
-                        }
+
+                        )}
+
                     </td>
 
                 </tr>

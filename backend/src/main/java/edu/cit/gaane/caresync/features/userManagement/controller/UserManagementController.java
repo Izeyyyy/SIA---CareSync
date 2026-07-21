@@ -1,6 +1,7 @@
 package edu.cit.gaane.caresync.features.userManagement.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +26,16 @@ public class UserManagementController {
     }
 
     @GetMapping
-    public List<UserResponse> getUsers() {
+    public List<UserResponse> getUsers(@RequestParam(required = false)
+        String search) {
 
-        return service.getAllUsers()
+        return service.getUsers(search)
                 .stream()
                 .map(user -> new UserResponse(
                         user.getId(),
                         user.getFirstName(),
                         user.getLastName(),
+                        user.getMiddleInitial(),
                         user.getEmail(),
                         user.getRole(),
                         user.getActive()
@@ -58,5 +61,19 @@ public class UserManagementController {
 
         return service.updateUserStatus(id, active);
 
+    }
+
+
+    @PutMapping("/{id}/reset-password")
+    public Map<String, String> resetPassword(
+            @PathVariable Long id
+    ) {
+
+        String temporaryPassword = service.resetPassword(id);
+
+        return Map.of(
+                "temporaryPassword",
+                temporaryPassword
+        );
     }
 }

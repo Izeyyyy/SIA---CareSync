@@ -9,6 +9,7 @@ public class LoginResponse {
     private char middleInitial;
     private String email;
     private String role;
+    private boolean mustChangePassword;
 
     public LoginResponse() {}
 
@@ -19,7 +20,8 @@ public class LoginResponse {
             String lastName,
             char middleInitial,
             String email,
-            String role
+            String role,
+            boolean mustChangePassword
     ) {
         this.token = token;
         this.id = id;
@@ -28,6 +30,7 @@ public class LoginResponse {
         this.middleInitial = middleInitial;
         this.email = email;
         this.role = role;
+        this.mustChangePassword = mustChangePassword;
     }
 
     public String getToken() {
@@ -56,5 +59,9 @@ public class LoginResponse {
 
     public String getRole() {
         return role;
+    }
+
+    public boolean getMustChangePassword(){
+        return mustChangePassword;
     }
 }

@@ -92,7 +92,7 @@ export default function ConsultationListPage() {
                 </PrimaryButton>
 
                 <SecondaryButton
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate('/doctor/dashboard')}
                 >
                     Back
                 </SecondaryButton>

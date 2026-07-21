@@ -47,16 +47,9 @@ public class PatientService {
             PatientEntity savedPatient = patientRepository.save(patient);
 
             auditLogService.createLog(
-
                 "CREATE",
-
                 "PATIENT",
-
-                "Registered patient "
-                + savedPatient.getFirstName()
-                + " "
-                + savedPatient.getLastName(),
-
+                "Registered patient ",
                 savedPatient.getId()
 
         );
@@ -110,16 +103,9 @@ public class PatientService {
         patientRepository.save(patient);
 
         auditLogService.createLog(
-
             "UPDATE",
-
             "PATIENT",
-
-            "Updated patient "
-            + patient.getFirstName()
-            + " "
-            + patient.getLastName(),
-
+            "Updated patient ",
             patient.getId()
 
     );
@@ -140,16 +126,9 @@ public class PatientService {
 
 
     auditLogService.createLog(
-
         "DELETE",
-
         "PATIENT",
-
-        "Deleted patient "
-        + patient.getFirstName()
-        + " "
-        + patient.getLastName(),
-
+        "Deleted patient ",
         patient.getId()
 
 );  

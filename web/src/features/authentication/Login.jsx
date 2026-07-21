@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../services/api";
+import Toast from "../../components/common/Toast";
 
 export default function Login() {
 
@@ -45,12 +46,20 @@ export default function Login() {
                 const role = response.data.role?.toLowerCase();
                 login(response.data);
 
+                if(response.data.mustChangePassword){
+
+                    navigate("/change-password");
+
+                    return;
+
+                }
+
                 const welcomeMessage = response.data.firstName
                     ? `Welcome back, ${response.data.firstName}!`
                     : "Welcome back!";
 
                 if (role === "doctor") {
-                    navigate("/doctor", { state: { successMessage: welcomeMessage } });
+                    navigate("/doctor/dashboard", { state: { successMessage: welcomeMessage } });
                 } else if (role === "admin") {
                     navigate("/admin/dashboard", { state: { successMessage: welcomeMessage } });
                 } else if (role === "clinic staff") {
@@ -117,11 +126,9 @@ export default function Login() {
                         </p>
                     )}
 
-                    {successMessage && (
-                        <p style={{ color: "#198754", marginBottom: "0.75rem" }}>
-                            {successMessage}
-                        </p>
-                    )}
+                    <Toast
+                        message={successMessage}
+                    />
 
                     <button className="auth-btn" type="submit">
                         Login

@@ -1,45 +1,31 @@
 import { useEffect, useState } from "react";
-
-import DashboardLayout from "../../../components/dashboard/DashboardLayout";
 import DashboardCard from "../../../components/dashboard/DashboardCard";
+import { getMyActivity } from "../services/auditService";
 import DataTable from "../../../components/common/DataTable";
 
-import { getAuditLogs } from "../services/auditService";
-
-export default function AuditLogsPage() {
-
-    const [logs, setLogs] = useState([]);
-
-    useEffect(() => {
+export default function MyActivityPage(){
+    const [logs,setLogs]=useState([]);
+    useEffect(()=>{
         loadLogs();
-    }, []);
-
-    async function loadLogs() {
-
-        try {
-
-            const data = await getAuditLogs();
+    },[]);
+    async function loadLogs(){
+        try{
+            const data = await getMyActivity();
             setLogs(data);
+        }
 
-        } catch (err) {
-
+        catch(err){
             console.error(err);
 
         }
-
     }
 
-    return (
-
-
-            <DashboardCard title="Audit Logs">
-
-                <DataTable
+    return(
+        <DashboardCard title="My Activity">
+            <DataTable
 
     columns={[
         "Date",
-        "User",
-        "Role",
         "Action",
         "Module",
         "Description"
@@ -65,10 +51,6 @@ export default function AuditLogsPage() {
 
             </td>
 
-            <td>{log.username}</td>
-
-            <td>{log.role}</td>
-
             <td>
 
                 <span className={`audit-action ${log.action.toLowerCase()}`}>
@@ -89,17 +71,15 @@ export default function AuditLogsPage() {
 
             </td>
 
-            <td>{log.description}</td>
+            <td className="audit-description">
+                {log.description}
+            </td>
 
         </tr>
 
     )}
 
  />
-
-            </DashboardCard>
-
-
+        </DashboardCard>
     );
-
 }

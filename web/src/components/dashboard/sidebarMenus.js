@@ -8,7 +8,8 @@ import {
     LogOut,
     Stethoscope,
     CalendarDays,
-    Clock3
+    Clock3,
+    History
 } from "lucide-react";
 
 export const sidebarMenus = {
@@ -70,11 +71,6 @@ export const sidebarMenus = {
                     icon: ClipboardList
                 },
 
-                {
-                    label: "Settings",
-                    path: "/admin/settings",
-                    icon: Settings
-                }
 
             ]
 
@@ -117,7 +113,24 @@ export const sidebarMenus = {
 
             ]
 
+        },
+
+        {
+            title: "ACTIVITY",
+
+            items: [
+
+                {
+                    label: "My Activity",
+                    path: "/doctor/activity",
+                    icon: History
+                }
+
+            ]
+
         }
+
+        
 
     ],
 
@@ -160,6 +173,21 @@ export const sidebarMenus = {
                 path: "/staff/patients/register",
                 icon: ClipboardList
             },
+
+        ]
+
+    },
+
+    {
+        title: "ACTIVITY",
+
+        items: [
+
+            {
+                label: "My Activity",
+                path: "/staff/activity",
+                icon: History
+            }
 
         ]
 

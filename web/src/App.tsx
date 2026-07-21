@@ -21,6 +21,8 @@ import ConsultationDetailsPage from "./features/consultation/pages/ConsultationD
 import DoctorLayout from "./layouts/DoctorLayout";
 import DoctorDashboard from "./features/dashboard/DoctorDashboard";
 import DoctorPatientListPage from "./features/doctorManagement/pages/DoctorPatientListPage";
+import ChangePassword from "./features/authentication/pages/ChangePassword";
+import MyActivityPage from "./features/auditLogs/pages/MyActivityPage";
 
 
 
@@ -33,6 +35,10 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route
+                    path="/change-password"
+                    element={<ChangePassword />}
+                />
                 <Route
                     path="/admin"
                     element={
@@ -102,6 +108,10 @@ function App() {
                         path="patients/:id/edit"
                         element={<EditPatientPage />}
                     />
+                    <Route
+                        path="activity"
+                        element={<MyActivityPage />}
+                    />
 
                 </Route>
 
@@ -130,7 +140,7 @@ function App() {
                     />
 
                     <Route
-                        path="consultations/new/:id"
+                        path="consultations/new/:patientId"
                         element={<NewConsultationPage />}
                     />
 
@@ -142,6 +152,11 @@ function App() {
                     <Route
                         path="consultations/edit/:id"
                         element={<EditConsultationPage />}
+                    />
+
+                    <Route
+                        path="activity"
+                        element={<MyActivityPage />}
                     />
 
 
