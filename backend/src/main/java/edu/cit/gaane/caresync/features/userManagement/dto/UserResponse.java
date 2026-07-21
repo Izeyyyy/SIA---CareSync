@@ -5,6 +5,7 @@ public class UserResponse {
     private Long id;
     private String firstName;
     private String lastName;
+    private char middleInitial;
     private String email;
     private String role;
     private boolean active;
@@ -15,6 +16,7 @@ public class UserResponse {
             Long id,
             String firstName,
             String lastName,
+            char middleInitial,
             String email,
             String role,
             boolean active
@@ -22,6 +24,7 @@ public class UserResponse {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.middleInitial = middleInitial;
         this.email = email;
         this.role = role;
         this.active = active;
@@ -49,5 +52,9 @@ public class UserResponse {
 
     public boolean isActive() {
         return active;
+    }
+
+    public char getMiddleInitial() {
+        return middleInitial;
     }
 }

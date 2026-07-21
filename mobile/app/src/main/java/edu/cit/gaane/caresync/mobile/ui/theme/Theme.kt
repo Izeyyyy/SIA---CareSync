@@ -17,7 +17,7 @@ private val CareSyncColorScheme = lightColorScheme(
         surface = Card,
         onSurface = Ink,
 
-        error = Danger
+        error = Danger,
 )
 
 @Composable
@@ -26,7 +26,7 @@ fun MobileTheme(
 ) {
     MaterialTheme(
             colorScheme = CareSyncColorScheme,
-            typography = Typography,
+            typography = AppTypography,
             content = content
     )
 }

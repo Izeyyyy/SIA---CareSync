@@ -1,16 +1,19 @@
 package edu.cit.gaane.caresync.features.authentication.controller;
 
 import java.util.Map;
+import org.springframework.security.core.Authentication;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cit.gaane.caresync.config.JwtService;
+import edu.cit.gaane.caresync.features.authentication.dto.ChangePasswordRequest;
 import edu.cit.gaane.caresync.features.authentication.dto.LoginResponse;
 import edu.cit.gaane.caresync.features.authentication.entity.UserEntity;
 import edu.cit.gaane.caresync.features.authentication.service.UserService;
@@ -73,10 +76,28 @@ public class UserController {
             loggedInUser.getLastName(),
             loggedInUser.getMiddleInitial(),
             loggedInUser.getEmail(),
-            loggedInUser.getRole()
+            loggedInUser.getRole(),
+            loggedInUser.getMustChangePassword()
     );
 
     return ResponseEntity.ok(response);
 }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request,
+            Authentication authentication
+    ) {
+
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        userService.changePassword(
+                user,
+                request.getNewPassword()
+        );
+
+        return ResponseEntity.ok("Password updated successfully.");
+    }
+        
 
 }

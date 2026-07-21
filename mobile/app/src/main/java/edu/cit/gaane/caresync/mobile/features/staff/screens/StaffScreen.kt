@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun StaffDashboardScreen(
+fun StaffScreen(
         firstName: String?
 ) {
 

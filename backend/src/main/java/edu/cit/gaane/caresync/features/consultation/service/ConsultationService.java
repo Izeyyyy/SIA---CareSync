@@ -66,9 +66,7 @@ public class ConsultationService {
         auditLogService.createLog(
                 "CREATE",
                 "CONSULTATION",
-                "Created consultation for " +
-                        patient.getFirstName() + " " +
-                        patient.getLastName(),
+                "Created consultation",
                 saved.getId()
         );
 
@@ -130,6 +128,14 @@ public class ConsultationService {
                 consultationRepository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException("Consultation not found."));
+        
+        UserEntity currentDoctor = SecurityUtils.getCurrentUser();
+
+        if (!consultation.getDoctor().getId().equals(currentDoctor.getId())) {
+        throw new RuntimeException(
+                "You are not allowed to edit another doctor's consultation."
+        );
+        }
 
         consultation.setChiefComplaint(request.getChiefComplaint());
         consultation.setDiagnosis(request.getDiagnosis());
@@ -161,10 +167,21 @@ public class ConsultationService {
                         .orElseThrow(() ->
                                 new RuntimeException("Consultation not found."));
 
+        UserEntity currentDoctor = SecurityUtils.getCurrentUser();
+
+        if (!consultation.getDoctor().getId().equals(currentDoctor.getId())) {
+        throw new RuntimeException(
+                "You are not allowed to delete another doctor's consultation."
+        );
+        }
+
         auditLogService.createLog(
                 "DELETE",
                 "CONSULTATION",
-                "Deleted consultation",
+                "Deleted consultation "
+                + consultation.getPatient().getFirstName()
+                + " "
+                + consultation.getPatient().getLastName(),
                 consultation.getId()
         );
 
@@ -187,17 +204,14 @@ public class ConsultationService {
                 consultation.getPatient().getId(),
                 consultation.getPatient().getFirstName() + " " +
                 consultation.getPatient().getLastName(),
-
                 consultation.getDoctor().getId(),
                 consultation.getDoctor().getFirstName() + " " +
                 consultation.getDoctor().getLastName(),
-
                 consultation.getChiefComplaint(),
                 consultation.getDiagnosis(),
                 consultation.getTreatmentPlan(),
                 consultation.getPrescription(),
                 consultation.getNotes(),
-
                 consultation.getConsultationDate()
 
         );

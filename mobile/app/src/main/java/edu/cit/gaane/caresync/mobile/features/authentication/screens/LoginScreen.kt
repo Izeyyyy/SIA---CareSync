@@ -40,6 +40,15 @@ fun LoginScreen(
 
 ){
 
+    fun isValidEmail(email: String): Boolean {
+
+        return android.util.Patterns.EMAIL_ADDRESS
+            .matcher(email)
+            .matches()
+
+    }
+
+
     var email by remember {
         mutableStateOf("")
     }
@@ -57,6 +66,9 @@ fun LoginScreen(
 
     val loggedInUser =
             loginViewModel.loggedInUser.collectAsState()
+
+    val isLoading =
+        loginViewModel.isLoading.collectAsState()
 
 
     Column(
@@ -191,25 +203,73 @@ fun LoginScreen(
 
                 }
 
+                LaunchedEffect(loginResult.value) {
+
+                    loginResult.value?.let {
+
+                        if (it != "Login successful") {
+
+                            message = it
+
+                        }
+
+                    }
+
+                }
+
                 Button(
-                        onClick = {
+                    enabled = !isLoading.value,
 
-                            loginViewModel.login(
-                                    email,
-                                    password
-                            )
+                    onClick = {
 
-                        },
+                        println("Login button clicked")
 
-                        modifier = Modifier.fillMaxWidth(),
 
-                        colors = ButtonDefaults.buttonColors(
-                                containerColor =
-                                MaterialTheme.colorScheme.primary
+                        if(email.isBlank()) {
+
+                            message = "Email is required"
+                            return@Button
+
+                        }
+
+
+                        if(password.isBlank()) {
+
+                            message = "Password is required"
+                            return@Button
+
+                        }
+
+                        if(!isValidEmail(email)) {
+
+                            message = "Enter a valid email address"
+                            return@Button
+
+                        }
+
+
+                        loginViewModel.login(
+                            email,
+                            password
                         )
+
+                    },
+
+                    modifier = Modifier.fillMaxWidth(),
+
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor =
+                            MaterialTheme.colorScheme.primary
+                    )
                 ) {
 
-                    Text("Login")
+                    Text(
+                        if(isLoading.value)
+                            "Logging in..."
+                        else
+                            "Login"
+                    )
+
                 }
 
 

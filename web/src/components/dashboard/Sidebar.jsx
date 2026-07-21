@@ -3,6 +3,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import SidebarItem from "./SidebarItem";
 import { sidebarMenus, logoutMenu } from "./sidebarMenus";
+import {
+    PanelLeftClose,
+    PanelLeftOpen
+} from "lucide-react";
 
 export default function Sidebar() {
 
@@ -58,13 +62,9 @@ export default function Sidebar() {
                 >
 
                     {collapsed
-
-                        ? <ChevronRight size={18} />
-
-                        : <ChevronLeft size={18} />
-
+                         ? <PanelLeftOpen size={18}/>
+                        : <PanelLeftClose size={18}/>
                     }
-
                 </button>
 
             </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import DashboardLayout from "../../../components/dashboard/DashboardLayout";
 import DashboardCard from "../../../components/dashboard/DashboardCard";
+import DataTable from "../../../components/common/DataTable";
 
 import { getAuditLogs } from "../services/auditService";
 
@@ -33,51 +34,68 @@ export default function AuditLogsPage() {
 
             <DashboardCard title="Audit Logs">
 
-                <table className="data-table">
+                <DataTable
 
-                    <thead>
+    columns={[
+        "Date",
+        "User",
+        "Role",
+        "Action",
+        "Module",
+        "Description"
+    ]}
 
-                        <tr>
+    data={logs}
 
-                            <th>Date & Time</th>
-                            <th>User</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                            <th>Module</th>
-                            <th>Description</th>
+    renderRow={(log)=>(
 
-                        </tr>
+        <tr key={log.id}>
 
-                    </thead>
+            <td>
 
-                    <tbody>
+                {new Date(log.createdAt).toLocaleString("en-PH",{
 
-                        {logs.map(log => (
+                    year:"numeric",
+                    month:"short",
+                    day:"numeric",
+                    hour:"numeric",
+                    minute:"2-digit"
 
-                            <tr key={log.id}>
+                })}
 
-                                <td>
-                                    {new Date(log.createdAt)
-                                        .toLocaleString()}
-                                </td>
+            </td>
 
-                                <td>{log.username}</td>
+            <td>{log.username}</td>
 
-                                <td>{log.role}</td>
+            <td>{log.role}</td>
 
-                                <td>{log.action}</td>
+            <td>
 
-                                <td>{log.module}</td>
+                <span className={`audit-action ${log.action.toLowerCase()}`}>
 
-                                <td>{log.description}</td>
+                    {log.action}
 
-                            </tr>
+                </span>
 
-                        ))}
+            </td>
 
-                    </tbody>
+            <td>
 
-                </table>
+                <span className="audit-module">
+
+                    {log.module}
+
+                </span>
+
+            </td>
+
+            <td>{log.description}</td>
+
+        </tr>
+
+    )}
+
+ />
 
             </DashboardCard>
 

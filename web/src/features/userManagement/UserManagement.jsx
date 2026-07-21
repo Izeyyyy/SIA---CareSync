@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
-import { getUsers, updateUser, updateUserStatus } from "./services/userManagementService";
+import { getUsers, updateUser, updateUserStatus, resetPassword } from "./services/userManagementService";
 import UserTable from "./components/UserTable";
 import EditUserModal from "./components/EditUserModal";
+import ResetPasswordModal from "../../components/dashboard/ResetPasswordModal";
+import { useToast } from "../../context/ToastContext";
 
 
 export default function UserManagement({ onUserUpdated }){
 
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [search, setSearch] = useState("");
+    const [resetUser, setResetUser] = useState(null);
+    const { showToast } = useToast();
 
 
     useEffect(() => {
 
-        loadUsers();
+        loadUsers(search);
 
-    }, []);
+    }, [search]);
 
 
-    const loadUsers = async () => {
+    const loadUsers = async (searchText = "") => {
 
         try {
 
-            const response = await getUsers();
+            const response = await getUsers(searchText);
 
             setUsers(response.data);
 
@@ -45,18 +50,60 @@ export default function UserManagement({ onUserUpdated }){
                 User Management
             </h2>
 
+            <input
+                type="text"
+                placeholder="Search by name or email..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                    width: "300px",
+                    padding: "8px",
+                    marginBottom: "16px"
+                }}
+            />
 
-            <UserTable 
-                users={users}
-                onEdit={setSelectedUser}
-                onStatusChange={async (id, active)=>{
 
-                    try{
+           <UserTable
+    users={users}
+    onEdit={setSelectedUser}
 
-                        await updateUserStatus(
-                            id,
-                            active
-                        );
+    onStatusChange={async (id, active) => {
+
+        try {
+
+            await updateUserStatus(id, active);
+
+            await loadUsers();
+
+            if (onUserUpdated) {
+                onUserUpdated();
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Failed updating status:",
+                error
+            );
+
+        }
+
+    }}
+
+    onResetPassword={(user) => {
+        setResetUser(user);
+    }}
+    />
+            <ResetPasswordModal
+                user={resetUser}
+                onClose={() => setResetUser(null)}
+                onConfirm={async () => {
+
+                    try {
+
+                        await resetPassword(resetUser.id);
+
+                        setResetUser(null);
 
                         await loadUsers();
 
@@ -64,11 +111,20 @@ export default function UserManagement({ onUserUpdated }){
                             onUserUpdated();
                         }
 
-                    }catch(error){
+                        showToast(
+                            "Password reset successfully. Default password is now 123456."
+                        );
+
+                    } catch (error) {
 
                         console.error(
-                            "Failed updating status:",
+                            "Failed resetting password:",
                             error
+                        );
+
+                        showToast(
+                            "Failed resetting password.",
+                            "error"
                         );
 
                     }
