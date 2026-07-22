@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.cit.gaane.caresync.mobile.features.authentication.repository.AuthenticationRepository
 import edu.cit.gaane.caresync.mobile.features.authentication.models.LoginResponse
+import edu.cit.gaane.caresync.mobile.shared.storage.SessionProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -70,8 +71,19 @@ class LoginViewModel : ViewModel() {
                     )
 
 
-                _loggedInUser.value = user
+                SessionProvider.sessionManager.saveSession(
 
+                    token = user.token,
+
+                    role = user.role,
+
+                    email = user.email,
+
+                    firstName = user.firstName
+
+                )
+
+                _loggedInUser.value = user
 
                 _loginResult.value =
                     "Login successful"

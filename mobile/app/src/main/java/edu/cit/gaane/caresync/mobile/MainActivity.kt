@@ -9,12 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import edu.cit.gaane.caresync.mobile.shared.navigation.AppNavigation
 import edu.cit.gaane.caresync.mobile.ui.theme.MobileTheme
+import edu.cit.gaane.caresync.mobile.features.authentication.network.RetrofitInstance
+import edu.cit.gaane.caresync.mobile.shared.storage.SessionProvider
+import edu.cit.gaane.caresync.mobile.shared.storage.SessionManager
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        RetrofitInstance.initialize(applicationContext)
+        SessionProvider.sessionManager =
+            SessionManager(applicationContext)
 
         setContent {
 
