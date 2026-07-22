@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.filled.Edit
 import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.cit.gaane.caresync.mobile.features.patients.viewmodel.PatientDetailsViewModel
 import edu.cit.gaane.caresync.mobile.shared.components.*
@@ -23,6 +24,7 @@ fun PatientDetailsScreen(
     onConsultations: () -> Unit,
     onNewConsultation: () -> Unit,
     onBackClick: () -> Unit,
+    onEditPatient: (() -> Unit)? = null,
     patientViewModel: PatientDetailsViewModel = viewModel()
 ) {
     val patient by patientViewModel.patient.collectAsState()
@@ -94,6 +96,19 @@ fun PatientDetailsScreen(
                     Spacer(Modifier.height(32.dp))
 
                     // Actions
+
+                    onEditPatient?.let {
+
+                        ActionButton(
+                            text = "Edit Patient",
+                            icon = Icons.Default.Edit,
+                            onClick = it,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                    }
+
+                    Spacer(Modifier.height(16.dp))
                     Text(
                         text = "Consultations",
                         style = MaterialTheme.typography.titleMedium,

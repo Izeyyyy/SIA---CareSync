@@ -69,4 +69,35 @@ class ConsultationViewModel : ViewModel() {
 
     }
 
+    fun updateConsultation(
+
+        consultationId: Long,
+
+        request: ConsultationRequest
+
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                repository.updateConsultation(
+                    consultationId,
+                    request
+                )
+
+                _success.value = true
+
+            }
+
+            catch(e: Exception){
+
+                e.printStackTrace()
+
+            }
+
+        }
+
+    }
+
 }

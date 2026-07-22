@@ -16,6 +16,7 @@ import edu.cit.gaane.caresync.mobile.shared.components.*
 fun ConsultationDetailsScreen(
     consultationId: Long,
     onBackClick: () -> Unit,
+    onEditClick: () -> Unit,
     consultationViewModel: ConsultationViewModel = viewModel()
 ) {
     val consultation by consultationViewModel.consultation.collectAsState()
@@ -57,6 +58,13 @@ fun ConsultationDetailsScreen(
                     MedicalSection("Prescription", c.prescription)
                     MedicalSection("Clinical Notes", c.notes)
                     
+                    Spacer(Modifier.height(16.dp))
+
+                    CareSyncButton(
+                        text = "Edit Consultation",
+                        onClick = onEditClick
+                    )
+
                     Spacer(Modifier.height(32.dp))
                 }
             }

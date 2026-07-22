@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 
 interface PatientApi {
@@ -27,6 +28,12 @@ interface PatientApi {
 
         @Body patient: PatientRequest
 
+    ): Patient
+
+    @PUT("patients/{id}")
+    suspend fun updatePatient(
+        @Path("id") id: Long,
+        @Body patient: PatientRequest
     ): Patient
 
 }

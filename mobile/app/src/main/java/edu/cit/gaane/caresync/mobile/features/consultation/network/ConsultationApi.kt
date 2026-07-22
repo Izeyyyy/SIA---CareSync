@@ -29,4 +29,14 @@ interface ConsultationApi {
 
     ): ConsultationResponse
 
+    @PUT("consultations/{id}")
+    suspend fun updateConsultation(
+
+        @Path("id")
+        id: Long,
+
+        @Body request: ConsultationRequest
+
+    ): ConsultationResponse
+
 }

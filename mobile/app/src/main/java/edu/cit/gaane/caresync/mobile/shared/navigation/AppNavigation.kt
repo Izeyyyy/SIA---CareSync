@@ -19,6 +19,8 @@ import edu.cit.gaane.caresync.mobile.features.consultation.screens.RegisterConsu
 import edu.cit.gaane.caresync.mobile.features.consultation.screens.PatientConsultationListScreen
 import edu.cit.gaane.caresync.mobile.features.consultation.screens.ConsultationDetailsScreen
 import edu.cit.gaane.caresync.mobile.shared.storage.SessionProvider
+import edu.cit.gaane.caresync.mobile.features.patients.screens.EditPatientScreen
+import edu.cit.gaane.caresync.mobile.features.consultation.screens.EditConsultationScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -170,6 +172,15 @@ fun AppNavigation() {
                 onNewConsultation = {
                     navController.navigate("patient/$id/newConsultation")
                 },
+
+                onEditPatient = {
+
+                    navController.navigate(
+                        "patient/$id/edit"
+                    )
+
+                },
+
                 onBackClick = { navController.popBackStack() }
             )
 
@@ -194,6 +205,7 @@ fun AppNavigation() {
                 onNewConsultation = {
                     navController.navigate("patient/$id/newConsultation")
                 },
+
                 onBackClick = { navController.popBackStack() }
             )
 
@@ -279,13 +291,110 @@ fun AppNavigation() {
 
         ) {
 
-            val consultationId =
+            val patientId =
+                it.arguments?.getLong("patientId") ?: 0L
 
+            val consultationId =
                 it.arguments?.getLong("consultationId") ?: 0L
 
+
             ConsultationDetailsScreen(
+
                 consultationId = consultationId,
-                onBackClick = { navController.popBackStack() }
+
+                onEditClick = {
+
+                    navController.navigate(
+                        "patient/$patientId/consultation/$consultationId/edit"
+                    )
+
+                },
+
+                onBackClick = {
+                    navController.popBackStack()
+                }
+
+            )
+
+        }
+
+        composable(
+
+            route = "patient/{patientId}/consultation/{consultationId}/edit",
+
+            arguments = listOf(
+
+                navArgument("patientId"){
+                    type = NavType.LongType
+                },
+
+                navArgument("consultationId"){
+                    type = NavType.LongType
+                }
+
+            )
+
+        ){
+
+            val patientId =
+                it.arguments?.getLong("patientId") ?: 0L
+
+
+            val consultationId =
+                it.arguments?.getLong("consultationId") ?: 0L
+
+
+
+            EditConsultationScreen(
+
+                consultationId = consultationId,
+
+                patientId = patientId,
+
+                onFinished = {
+
+                    navController.popBackStack()
+
+                },
+
+                onBackClick = {
+
+                    navController.popBackStack()
+
+                }
+
+            )
+
+        }
+
+        composable(
+            route = "patient/{id}/edit",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.LongType
+                }
+            )
+        ) {
+
+            val patientId =
+                it.arguments?.getLong("id") ?: 0L
+
+            EditPatientScreen(
+
+                patientId = patientId,
+
+                onFinished = {
+
+                    navController.popBackStack()
+
+                },
+
+                onBackClick = {
+
+                    navController.popBackStack()
+
+                }
+
             )
 
         }

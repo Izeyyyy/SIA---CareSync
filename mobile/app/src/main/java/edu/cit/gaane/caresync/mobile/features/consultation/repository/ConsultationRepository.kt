@@ -23,4 +23,15 @@ class ConsultationRepository {
 
     ) = RetrofitInstance.consultationApi.getConsultation(consultationId)
 
+    suspend fun updateConsultation(
+
+        consultationId: Long,
+
+        request: ConsultationRequest
+
+    ) = RetrofitInstance.consultationApi.updateConsultation(
+        consultationId,
+        request
+    )
+
 }

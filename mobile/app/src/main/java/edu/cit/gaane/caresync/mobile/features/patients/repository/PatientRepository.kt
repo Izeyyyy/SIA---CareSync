@@ -32,4 +32,16 @@ class PatientRepository {
 
     }
 
+    suspend fun updatePatient(
+        id: Long,
+        patient: PatientRequest
+    ): Patient {
+
+        return RetrofitInstance.patientApi.updatePatient(
+            id,
+            patient
+        )
+
+    }
+
 }
